@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     {
         //
         DB::table('admin')->insert([
-            'nama'=>'Ari',
+            'nama'=>'Imam',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);

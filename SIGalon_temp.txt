@@ -1,0 +1,6 @@
+Aset
+Galon : 50
+Isi Galon:50
+Kardus:16
+
+Saldo:

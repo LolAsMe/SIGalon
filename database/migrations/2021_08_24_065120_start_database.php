@@ -14,76 +14,47 @@ class StartDatabase extends Migration
     public function up()
     {
         //
-        Schema::create('produsen', function (Blueprint $table) {
+
+        Schema::create('aset', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('nama')->default('aset');
+            $table->decimal('harga_jual', 7);
+            $table->decimal('harga_beli', 7);
+            $table->integer('jumlah')->default(0);
+            $table->integer('total')->default(0);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
+            $table->string('keterangan')->default('aset');
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create('produk', function (Blueprint $table) {
+        Schema::create('log', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->foreignId('produsen_id')->nullable();
-            $table->unsignedDecimal('harga_jual');
-            $table->unsignedDecimal('harga_beli');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-
-        Schema::create('pedagang', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
+            $table->morphs('owner');
+            $table->foreignId('detail_transaksi_id')->nullable();
+            $table->string('nama')->default('log');
+            $table->decimal('debit', 7);
+            $table->decimal('kredit', 7);
+            $table->integer('total');
+            $table->string('keterangan')->default('aset');
             $table->softDeletes();
             $table->timestamps();
         });
 
         Schema::create('saldo', function (Blueprint $table) {
             $table->id();
-            $table->decimal('jumlah', 16)->default(0);
-            $table->morphs('owner');
+            $table->decimal('total', 9)->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create('log_saldo', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('saldo_id');
-            $table->decimal('jumlah', 16)->default(0);
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
-            $table->dateTime('tanggal')->useCurrent();
-            $table->string('keterangan')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
 
-        Schema::create('kas', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->decimal('jumlah',15)->default(0);
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('log_kas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('kas_id');
-            $table->dateTime('tanggal')->useCurrent();
-            $table->decimal('jumlah')->default(0);
-            $table->nullableMorphs('payer');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
-            $table->string('keterangan')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
 
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tanggal')->useCurrent();
-            $table->decimal('jumlah',16);
-            $table->morphs('owner');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
+            $table->decimal('total', 7);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -91,46 +62,43 @@ class StartDatabase extends Migration
 
         Schema::create('detail_transaksi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaksi_id');
+            $table->foreignId('aset_id');
+            $table->integer('jumlah');
+            $table->decimal('harga', 7);
+            $table->decimal('debit')->default(0);
+            $table->decimal('kredit')->default(0);
+            $table->decimal('total')->default(0);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
             $table->string('keterangan')->nullable();
-            $table->decimal('jumlah',14);
-            $table->foreignId('produk_id');
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create('penjualan', function (Blueprint $table) {
+        Schema::create('piutang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('produk_id');
-            $table->unsignedInteger('titip');
-            $table->unsignedInteger('laku')->nullable();
-            $table->unsignedDecimal('harga_jual');
-            $table->unsignedDecimal('harga_beli');
-            $table->dateTime('tanggal')->useCurrent();
-            $table->enum('status', [ 'Pending','Ignored','Paid Out','Ok','Draft'])->default('Draft');
-            $table->foreignId('pedagang_id');
+            $table->foreignId('aset_id')->nullable();
+            $table->string('nama');
+            $table->decimal('jumlah')->default(1);
+            $table->decimal('bayar')->default(0);
+            $table->decimal('harga', 7);
+            $table->integer('total');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
 
-        Schema::create('kas_harian', function (Blueprint $table) {
+        Schema::create('utang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('log_kas_id')->nullable();
-            $table->dateTime('tanggal')->useCurrent();
-            $table->morphs('payer');
-            $table->decimal('jumlah')->default(0);
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Draft');
+            $table->foreignId('aset_id')->nullable();
+            $table->string('nama');
+            $table->decimal('jumlah')->default(1);
+            $table->decimal('bayar')->default(0);
+            $table->decimal('harga', 7);
+            $table->integer('total');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
-        });
-
-        Schema::create('penjualan_transaksi', function (Blueprint $table) {
-            $table->unsignedBigInteger('penjualan_id')->unsigned()->index();
-            $table->foreign('penjualan_id')->references('id')->on('penjualan')->onDelete('cascade');
-            $table->unsignedBigInteger('transaksi_id')->unsigned()->index();
-            $table->foreign('transaksi_id')->references('id')->on('transaksi')->onDelete('cascade');
-            $table->primary(['penjualan_id', 'transaksi_id']);
         });
 
         Schema::create('admin', function (Blueprint $table) {
@@ -139,8 +107,6 @@ class StartDatabase extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-
     }
 
     /**
@@ -151,20 +117,13 @@ class StartDatabase extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('penjualan_transaksi');
-        Schema::dropIfExists('kas_harian');
-        Schema::dropIfExists('log_saldo');
-        Schema::dropIfExists('log_penjualan');
-        Schema::dropIfExists('log_kas');
-        Schema::dropIfExists('kas');
-        Schema::dropIfExists('saldo');
-        Schema::dropIfExists('penjualan');
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('log');
         Schema::dropIfExists('detail_transaksi');
-        Schema::dropIfExists('produk');
-        Schema::dropIfExists('produsen');
+        Schema::dropIfExists('saldo');
+        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('piutang');
+        Schema::dropIfExists('utang');
+        Schema::dropIfExists('aset');
         Schema::dropIfExists('admin');
-        Schema::dropIfExists('pedagang');
-
     }
 }
