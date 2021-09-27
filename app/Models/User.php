@@ -49,7 +49,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
-    use Notifiable,HasOwner,
+    use Notifiable,
         HasFactory;
 
     /**
@@ -158,4 +158,16 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     {
         return [];
     }
+
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    public function getTipeAttribute()
+    {
+        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\") + 2);
+        return $value;
+    }
+}
 }
