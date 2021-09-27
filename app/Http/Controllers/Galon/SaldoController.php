@@ -1,19 +1,13 @@
 <?php
-namespace App\Http\Controllers\Tenongan;
+
+namespace App\Http\Controllers\Galon;
+
 use App\Http\Controllers\Controller;
-use App\Models\Tenongan\Saldo;
+use App\Models\Galon\Saldo;
 use Illuminate\Http\Request;
-use App\Contracts\Tenongan\TenonganService;
-use App\Http\Requests\SaldoIncreaseRequest;
-use App\Models\Tenongan\Pedagang;
 
 class SaldoController extends Controller
 {
-    protected $tenonganService;
-
-    public function __construct(TenonganService $tenonganService) {
-        $this->tenonganService = $tenonganService;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,20 +16,18 @@ class SaldoController extends Controller
     public function index()
     {
         //
-        $saldo = Saldo::all();
-        return response()->json($saldo->load('owner:id,nama'));
     }
+
     /**
-     * Display the specified resource.
+     * Show the form for creating a new resource.
      *
-     * @param  \App\Models\Tenongan\Saldo  $saldo
      * @return \Illuminate\Http\Response
      */
-    public function show(Saldo $saldo)
+    public function create()
     {
         //
-        return response()->json($saldo->load(['owner:id,nama','log']));
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -45,39 +37,50 @@ class SaldoController extends Controller
     public function store(Request $request)
     {
         //
-        $saldo = $request->all();
-        $saldo = Saldo::create($saldo);
-        return response()->json($saldo->load('owner'));
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Galon\Saldo  $saldo
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Saldo $saldo)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Galon\Saldo  $saldo
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Saldo $saldo)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Galon\Saldo  $saldo
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Saldo $saldo)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Galon\Saldo  $saldo
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Saldo $saldo)
     {
         //
-        $saldo->delete();
     }
-
-    /**
-     * Tambah saldo
-     *
-     * @param Saldo $saldo
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function increase(SaldoIncreaseRequest $request,Pedagang $pedagang)
-    {
-        $test = $this->tenonganService->increaseSaldo($request->jumlah,$request->validated());
-        return $test;
-    }
-
-    /**
-     * Kurang Saldo
-     *
-     * @param Saldo $saldo
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function decrease( Request $request, Pedagang $pedagang)
-    {
-        $test = $this->tenonganService->decreaseSaldo($request->jumlah,$request->all());
-    }
-
 }
