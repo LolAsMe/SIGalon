@@ -93,7 +93,6 @@ export default {
   methods: {
     async editAset() {
       const { data } = await this.form.patch("api/aset/" + this.form.id);
-      console.log(data)
       this.$store.commit("aset/editAset", data);
       this.form.reset();
       this.showModal=false;

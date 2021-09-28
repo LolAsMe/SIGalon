@@ -3,133 +3,135 @@
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Saldo</h2></div>
-
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="toggleAddModal">Add</button>
-          <add-saldo-modal
-            :showModal="showAddModal"
-            @toggle="toggleAddModal"
-          ></add-saldo-modal>
+          <button
+            class="btn btn-primary"
+            v-if="isRole('Admin')"
+            @click="$refs.addModal.showModal = true"
+          >
+            Add
+          </button>
+          <button
+            class="btn btn-primary"
+            v-if="isRole('Admin')"
+            @click="$refs.uploadModal.showModal = true"
+          >
+            Import
+          </button>
+          <saldo-modal-add ref="addModal"></saldo-modal-add>
+          <upload-modal :url="'saldo'" ref="uploadModal"></upload-modal>
         </div>
       </div>
     </div>
-    <div class="col-12" v-if="isRole('Pedagang') || isRole('Produsen')">Jumlah Saldo: {{saldo.jumlah}}</div>
+
     <div class="col-12 mt-2">
-      <card :title="'Daftar saldo'" v-if="isRole('Admin')">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nama</th>
-              <th scope="col">Tipe</th>
-              <th scope="col">Saldo</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody v-if="!loading">
-            <tr v-for="saldo in saldos" :key="saldo.id">
-              <td>{{ saldo.id }}</td>
-              <td>{{ saldo.owner.nama }}</td>
-              <td>{{ saldo.tipe }}</td>
-              <td>{{ saldo.jumlah }}</td>
-              <!-- <td>{{ saldo.pedagang.nama }}</td> -->
-              <td>
-                <a
-                  class="btn btn-primary btn-sm"
-                  @click="toggleSaldoModal(), setSaldo(saldo.id)"
-                >
-                  Lihat
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <log-saldo-modal
-          ref="saldoModal"
-          @toggle="toggleSaldoModal"
-          :showModal="showSaldoModal"
-          :saldo="saldo"
-        ></log-saldo-modal>
-      </card>
-      <card
-        :title="'Log saldo'"
-        v-if="isRole('Produsen') || isRole('Pedagang')"
-      >
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Keterangan</th>
-              <th scope="col">Jumlah</th>
-              <th scope="col">Tanggal</th>
-            </tr>
-          </thead>
-          <tbody v-if="!loading">
-            <tr v-for="log in saldo.log" :key="log.id">
-              <td>{{ log.id }}</td>
-              <td>{{ log.keterangan }}</td>
-              <td>{{ log.jumlah }}</td>
-              <td>{{ log.tanggal }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <card :title="'Daftar Saldo'">
+        <v-table
+          :items="items"
+          :itemsTitle="itemsTitle"
+          :isAction="isRole('Admin')"
+        >
+          <template v-slot:action="action">
+            <td>
+              <dropdown name="Action">
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="
+                      ($refs.saldoModal.showModal = true),
+                        ($refs.saldoModal.item = action)
+                    "
+                  >
+                    Lihat
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="
+                      ($refs.editModal.showModal = true),
+                        $refs.editModal.setSaldo(action.data)
+                    "
+                  >
+                    Edit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="deleteSaldo(action.data.id)"
+                  >
+                    Hapus
+                  </a>
+                </li>
+              </dropdown>
+            </td>
+          </template>
+        </v-table>
+        <saldo-modal-show ref="saldoModal"></saldo-modal-show>
+
+        <saldo-modal-edit ref="editModal"></saldo-modal-edit>
       </card>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Modal from "~/components/Modal";
-import AddSaldoModal from "~/components/galon/AddSaldoModal";
-import LogSaldoModal from "~/components/galon/LogSaldoModal";
+import { mapGetters } from "vuex";
+import SaldoModalAdd from "~/components/galon/SaldoModalAdd";
+import SaldoModalShow from "~/components/galon/SaldoModalShow";
+import UploadModal from "~/components/galon/UploadModal";
+import SaldoModalEdit from "~/components/galon/SaldoModalEdit";
+import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
 import axios from "axios";
 
-// import axios from 'axios'
 export default {
   middleware: "auth",
   components: {
-    Modal,
-    AddSaldoModal,
-    LogSaldoModal,
+    SaldoModalAdd,
+    SaldoModalShow,
+    SaldoModalEdit,
+    UploadModal,
     Dropdown,
+    VTable,
   },
-  computed: mapGetters({
-    saldos: "saldo/saldos",
-    saldo: "saldo/saldo",
-  }),
+  computed: {
+    ...mapGetters({
+      saldos: "saldo/saldos",
+    }),
+    items: function () {
+      if (!this.loading && this.saldos) {
+        return this.saldos.map(
+          ({ id, nama, harga_jual, harga_beli, jumlah, status }) => {
+            return { id, nama, harga_jual, harga_beli, jumlah, status };
+          }
+        );
+      }
+    },
+    itemsTitle: function () {
+      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah", "Status"];
+    },
+  },
   data() {
     return {
-      showAddModal: false,
-      showSaldoModal: false,
+      dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
+      dataEdit: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       loading: true,
     };
   },
   methods: {
     async deleteSaldo(id) {
       const { data } = await axios.delete("api/saldo/" + id);
-      await this.$store.commit("saldo/deleteSaldo", id);
-    },
-    async setSaldo(id) {
-      await this.$store.dispatch("saldo/fetchSaldo", id);
-      this.$refs.saldoModal.loading = false;
-    },
-    setDataEdit(obj) {
-      this.dataEdit = obj;
-      this.$refs.editModal.setSaldo(obj);
-    },
-    toggleAddModal() {
-      this.showAddModal = !this.showAddModal;
-    },
-    toggleSaldoModal() {
-      this.showSaldoModal = !this.showSaldoModal;
+      this.$store.commit("saldo/deleteSaldo", id);
     },
   },
   created() {
     this.$store.dispatch("saldo/fetchSaldos");
-    this.$store.dispatch("saldo/fetchSaldo",1);
     this.loading = false;
   },
   metaInfo() {

@@ -14,15 +14,14 @@ export default [
 
   { path: '/home', name: 'home', component: page('home.vue') },
   { path: '/dashboard', name: 'dashboard', component: page('galon/dashboard.vue') },
-  { path: '/produk', name: 'produk', component: page('galon/produk.vue') },
   { path: '/aset', name: 'aset', component: page('galon/aset.vue') },
-  { path: '/pedagang', name: 'pedagang', component: page('galon/pedagang.vue') },
-  { path: '/penjualan', name: 'penjualan', component: page('galon/penjualan.vue') },
-  { path: '/kas', name: 'kas', component: page('galon/kas.vue') },
+  { path: '/detail/transaksi', name: 'detail.transaksi', component: page('galon/detail_transaksi.vue') },
+  { path: '/log', name: 'log', component: page('galon/log.vue') },
+  { path: '/piutang', name: 'piutang', component: page('galon/piutang.vue') },
   { path: '/saldo', name: 'saldo', component: page('galon/saldo.vue') },
-  { path: '/user', name: 'user', component: page('galon/user.vue') },
   { path: '/transaksi', name: 'transaksi', component: page('galon/transaksi.vue') },
-  { path: '/kas/harian', name: 'kas.harian', component: page('galon/kas-harian.vue') },
+  { path: '/utang', name: 'utang', component: page('galon/utang.vue') },
+  { path: '/user', name: 'user', component: page('galon/user.vue') },
 
   { path: '/test', name: 'test', component: page('test.vue') },
   {

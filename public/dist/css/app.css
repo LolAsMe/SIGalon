@@ -18821,21 +18821,6 @@ svg:not(:root).svg-inline--fa {
 }
 
 
-.settings-card .card-body {
-  padding: 0;
-}
-
-
-.top-right[data-v-cdd8e9ee] {
-  position: absolute;
-  right: 10px;
-  top: 18px;
-}
-.title[data-v-cdd8e9ee] {
-  font-size: 85px;
-}
-
-
 .modal-mask[data-v-3abfefa8] {
   position: fixed;
   z-index: 9998;
@@ -18945,5 +18930,20 @@ svg:not(:root).svg-inline--fa {
 .modal-enter .modal-container[data-v-53ab54d2],
 .modal-leave-active .modal-container[data-v-53ab54d2] {
   transform: scale(1.1);
+}
+
+
+.settings-card .card-body {
+  padding: 0;
+}
+
+
+.top-right[data-v-cdd8e9ee] {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+.title[data-v-cdd8e9ee] {
+  font-size: 85px;
 }
 

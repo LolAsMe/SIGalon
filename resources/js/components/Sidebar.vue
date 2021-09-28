@@ -54,71 +54,59 @@
         </li>
         <li>
           <router-link
-            :to="{ name: 'pedagang' }"
+            :to="{ name: 'detail.transaksi' }"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Pedagang</span></router-link
+            <span class="ms-1 d-none d-sm-inline">Detail Transaksi</span></router-link
           >
         </li>
         <li>
           <router-link
-            :to="{ name: 'produk' }"
+            :to="{ name: 'log' }"
             class="nav-link px-0 align-middle"
           >
-            <i class="fs-4 bi-table"></i>
-            <span class="ms-1 d-none d-sm-inline">Produk</span></router-link
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Log</span></router-link
           >
         </li>
         <li>
           <router-link
-            :to="{ name: 'penjualan' }"
+            :to="{ name: 'piutang' }"
             class="nav-link px-0 align-middle"
           >
-            <i class="fs-4 bi-grid"></i>
-            <span class="ms-1 d-none d-sm-inline">Penjualan</span>
-          </router-link>
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Piutang</span></router-link
+          >
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'saldo' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Saldo</span></router-link
+          >
         </li>
         <li>
           <router-link
             :to="{ name: 'transaksi' }"
             class="nav-link px-0 align-middle"
           >
-            <i class="fs-4 bi-grid"></i>
-            <span class="ms-1 d-none d-sm-inline">Transaksi</span>
-          </router-link>
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Transaksi</span></router-link
+          >
         </li>
         <li>
           <router-link
-            :to="{ name: 'saldo' }"
-            href="#"
+            :to="{ name: 'utang' }"
             class="nav-link px-0 align-middle"
           >
-            <i class="fs-4 bi-people"></i>
-            <span class="ms-1 d-none d-sm-inline">Saldo</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            :to="{ name: 'kas' }"
-            v-role="'Admin'"
-            href="#"
-            class="nav-link px-0 align-middle"
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Utang</span></router-link
           >
-            <i class="fs-4 bi-people"></i>
-            <span class="ms-1 d-none d-sm-inline">Kas</span>
-          </router-link>
         </li>
-        <li>
-          <router-link
-            :to="{ name: 'kas.harian' }"
-            href="#"
-            class="nav-link px-0 align-middle"
-          >
-            <i class="fs-4 bi-people"></i>
-            <span class="ms-1 d-none d-sm-inline">Kas Harian</span>
-          </router-link>
-        </li>
+
         <li>
           <router-link
             :to="{ name: 'user' }"

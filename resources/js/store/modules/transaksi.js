@@ -3,9 +3,8 @@ import store from '~/store'
 
 // state
 export const state = {
-  transaksis: [
-  ],
 
+  transaksis: [],
 }
 
 // getters
@@ -15,34 +14,22 @@ export const getters = {
 
 // mutations
 export const mutations = {
-  setTransaksi: (state, transaksis) => (state.transaksis = transaksis),
-  addSaldo: (state, transaksi) => state.transaksis.push(transaksi),
-  editSaldo(state, nSaldo){
-    const oldSaldo = state.transaksis.find( transaksi => transaksi.id === nSaldo.id );
-    if (oldSaldo) {
+  setTransaksis: (state, transaksis) => (state.transaksis = transaksis),
+  editTransaksi(state, nTransaksi) {
+    const oldTransaksi = state.transaksis.find(transaksi => transaksi.id === nTransaksi.id);
+    if (oldTransaksi) {
       // not creating a new object but modifying old object here
-      Object.assign(oldSaldo, nSaldo)
+      Object.assign(oldTransaksi, nTransaksi)
     }
   },
-  deleteSaldo: (state, id) => state.transaksis = state.transaksis.filter(transaksi => transaksi.id !== id)
+  addTransaksi: (state, transaksi) => state.transaksis.push(transaksi),
+  deleteTransaksi: (state, id) => state.transaksis = state.transaksis.filter(transaksis => transaksis.id !== id)
 }
 
 // actions
 export const actions = {
-  async fetchTransaksis({ commit }){
-
-    let id = store.getters['auth/user'].owner_id
-    let role = store.getters['auth/user'].tipe
-    let data = []
-    if(role == 'Admin'){
-      data =  (await axios.get('/api/transaksi')).data
-    }
-    if(role == 'Produsen'){
-      data =  (await axios.get('/api/produsen/transaksi/'+id)).data
-    }
-    if(role == 'Pedagang'){
-      data =  (await axios.get('/api/pedagang/transaksi/'+id)).data
-    }
-    commit('setTransaksi',data)
-  }
+  async fetchTransaksis({ commit }) {
+    const { data } = await axios.get('/api/transaksi')
+    commit('setTransaksis', data)
+  },
 }
