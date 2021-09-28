@@ -45,11 +45,11 @@
         </li>
         <li>
           <router-link
-            :to="{ name: 'produsen' }"
+            :to="{ name: 'aset' }"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Produsen</span></router-link
+            <span class="ms-1 d-none d-sm-inline">Aset</span></router-link
           >
         </li>
         <li>

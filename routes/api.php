@@ -7,16 +7,13 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\ImportController;
+use App\Http\Controllers\Galon\AsetController;
+use App\Http\Controllers\Galon\PiutangController;
+use App\Http\Controllers\Galon\SaldoController;
+use App\Http\Controllers\Galon\TransaksiController;
+use App\Http\Controllers\Galon\UtangController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
-use App\Http\Controllers\SpreadsheetController;
-use App\Http\Controllers\Tenongan\KasController;
-use App\Http\Controllers\Tenongan\PedagangController;
-use App\Http\Controllers\Tenongan\PenjualanController;
-use App\Http\Controllers\Tenongan\ProdukController;
-use App\Http\Controllers\Tenongan\ProdusenController;
-use App\Http\Controllers\Tenongan\SaldoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,11 +35,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
-    Route::resource('aset', AsetController::class);
-    Route::resource('transaksi', TransaksiController::class);
-    Route::resource('saldo', SalddoController::class);
-    Route::resource('utang', PiutangController::class);
-    Route::resource('piutang', PiutangController::class);
+    Route::apiResource('aset', AsetController::class);
+    Route::apiResource('transaksi', TransaksiController::class);
+    Route::apiResource('saldo', SaldoController::class);
+    Route::apiResource('utang', UtangController::class);
+    Route::apiResource('piutang', PiutangController::class);
 
 
 });

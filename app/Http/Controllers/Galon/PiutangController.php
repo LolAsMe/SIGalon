@@ -16,16 +16,8 @@ class PiutangController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $piutangs = Piutang::all();
+        return response()->json($piutangs);
     }
 
     /**
@@ -37,6 +29,8 @@ class PiutangController extends Controller
     public function store(Request $request)
     {
         //
+        $piutang = Piutang::create($request->all());
+        return response($piutang);
     }
 
     /**
@@ -48,17 +42,7 @@ class PiutangController extends Controller
     public function show(Piutang $piutang)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\Piutang  $piutang
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Piutang $piutang)
-    {
-        //
+        return response($piutang);
     }
 
     /**
@@ -71,6 +55,8 @@ class PiutangController extends Controller
     public function update(Request $request, Piutang $piutang)
     {
         //
+        $newPiutang = $piutang->update($request->all());
+        return response()->json($newPiutang);
     }
 
     /**
@@ -82,5 +68,7 @@ class PiutangController extends Controller
     public function destroy(Piutang $piutang)
     {
         //
+        $piutang->delete();
+        return response()->json('berhasil');
     }
 }

@@ -9,7 +9,7 @@ export const state = {
   saldo: {
     "id": 1,
     "jumlah": "-600.00",
-    "owner_type": "App\\Models\\Tenongan\\Pedagang",
+    "owner_type": "App\\Models\\galon\\Pedagang",
     "owner_id": 1,
     "deleted_at": null,
     "created_at": "2021-09-24T08:52:30.000000Z",

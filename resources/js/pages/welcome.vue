@@ -22,7 +22,7 @@
       </div>
 
       <div class="links">
-        <a href="tenongan.id">tenongan.id</a>
+        <a href="galon.id">galon.id</a>
       </div>
     </div>
   </div>

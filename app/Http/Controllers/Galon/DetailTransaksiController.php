@@ -16,16 +16,8 @@ class DetailTransaksiController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $detailTransaksis = DetailTransaksi::all();
+        return response()->json($detailTransaksis);
     }
 
     /**
@@ -37,6 +29,8 @@ class DetailTransaksiController extends Controller
     public function store(Request $request)
     {
         //
+        $detailTransaksi = DetailTransaksi::create($request->all());
+        return response($detailTransaksi);
     }
 
     /**
@@ -48,17 +42,7 @@ class DetailTransaksiController extends Controller
     public function show(DetailTransaksi $detailTransaksi)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\DetailTransaksi  $detailTransaksi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DetailTransaksi $detailTransaksi)
-    {
-        //
+        return response($detailTransaksi);
     }
 
     /**
@@ -71,6 +55,8 @@ class DetailTransaksiController extends Controller
     public function update(Request $request, DetailTransaksi $detailTransaksi)
     {
         //
+        $newDetailTransaksi = $detailTransaksi->update($request->all());
+        return response()->json($newDetailTransaksi);
     }
 
     /**
@@ -82,5 +68,7 @@ class DetailTransaksiController extends Controller
     public function destroy(DetailTransaksi $detailTransaksi)
     {
         //
+        $detailTransaksi->delete();
+        return response()->json('berhasil');
     }
 }

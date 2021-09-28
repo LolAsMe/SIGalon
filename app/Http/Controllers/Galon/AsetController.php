@@ -16,16 +16,8 @@ class AsetController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $asets = Aset::all();
+        return response()->json($asets);
     }
 
     /**
@@ -37,6 +29,8 @@ class AsetController extends Controller
     public function store(Request $request)
     {
         //
+        $aset = Aset::create($request->all());
+        return response($aset);
     }
 
     /**
@@ -48,17 +42,7 @@ class AsetController extends Controller
     public function show(Aset $aset)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\Aset  $aset
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Aset $aset)
-    {
-        //
+        return response($aset);
     }
 
     /**
@@ -71,6 +55,13 @@ class AsetController extends Controller
     public function update(Request $request, Aset $aset)
     {
         //
+        try {
+            $newAset = $aset->update($request->all());
+            return response()->json($aset);
+
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
     /**
@@ -82,5 +73,7 @@ class AsetController extends Controller
     public function destroy(Aset $aset)
     {
         //
+        $aset->delete();
+        return response()->json('berhasil');
     }
 }

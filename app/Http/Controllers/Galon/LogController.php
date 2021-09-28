@@ -16,16 +16,8 @@ class LogController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $logs = Log::all();
+        return response()->json($logs);
     }
 
     /**
@@ -37,6 +29,8 @@ class LogController extends Controller
     public function store(Request $request)
     {
         //
+        $log = Log::create($request->all());
+        return response($log);
     }
 
     /**
@@ -48,17 +42,7 @@ class LogController extends Controller
     public function show(Log $log)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\Log  $log
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Log $log)
-    {
-        //
+        return response($log);
     }
 
     /**
@@ -71,6 +55,8 @@ class LogController extends Controller
     public function update(Request $request, Log $log)
     {
         //
+        $newLog = $log->update($request->all());
+        return response()->json($newLog);
     }
 
     /**
@@ -82,5 +68,7 @@ class LogController extends Controller
     public function destroy(Log $log)
     {
         //
+        $log->delete();
+        return response()->json('berhasil');
     }
 }

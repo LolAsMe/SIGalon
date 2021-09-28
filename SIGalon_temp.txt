@@ -4,3 +4,6 @@ Isi Galon:50
 Kardus:16
 
 Saldo:
+
+
+-4 11.12

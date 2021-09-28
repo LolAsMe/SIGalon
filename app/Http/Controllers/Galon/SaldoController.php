@@ -16,16 +16,8 @@ class SaldoController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $saldos = Saldo::all();
+        return response()->json($saldos);
     }
 
     /**
@@ -37,6 +29,8 @@ class SaldoController extends Controller
     public function store(Request $request)
     {
         //
+        $saldo = Saldo::create($request->all());
+        return response($saldo);
     }
 
     /**
@@ -48,17 +42,7 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\Saldo  $saldo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Saldo $saldo)
-    {
-        //
+        return response($saldo);
     }
 
     /**
@@ -71,6 +55,8 @@ class SaldoController extends Controller
     public function update(Request $request, Saldo $saldo)
     {
         //
+        $newSaldo = $saldo->update($request->all());
+        return response()->json($newSaldo);
     }
 
     /**
@@ -82,5 +68,7 @@ class SaldoController extends Controller
     public function destroy(Saldo $saldo)
     {
         //
+        $saldo->delete();
+        return response()->json('berhasil');
     }
 }

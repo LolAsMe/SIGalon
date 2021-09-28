@@ -16,16 +16,8 @@ class UtangController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $utangs = Utang::all();
+        return response()->json($utangs);
     }
 
     /**
@@ -37,6 +29,8 @@ class UtangController extends Controller
     public function store(Request $request)
     {
         //
+        $utang = Utang::create($request->all());
+        return response($utang);
     }
 
     /**
@@ -48,17 +42,7 @@ class UtangController extends Controller
     public function show(Utang $utang)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Galon\Utang  $utang
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Utang $utang)
-    {
-        //
+        return response($utang);
     }
 
     /**
@@ -71,6 +55,8 @@ class UtangController extends Controller
     public function update(Request $request, Utang $utang)
     {
         //
+        $newUtang = $utang->update($request->all());
+        return response()->json($newUtang);
     }
 
     /**
@@ -82,5 +68,7 @@ class UtangController extends Controller
     public function destroy(Utang $utang)
     {
         //
+        $utang->delete();
+        return response()->json('berhasil');
     }
 }

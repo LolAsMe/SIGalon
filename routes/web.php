@@ -17,5 +17,4 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('test3', [TestController::class, 'test'])->name('qwe');
 
