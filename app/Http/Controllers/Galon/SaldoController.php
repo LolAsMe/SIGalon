@@ -56,7 +56,7 @@ class SaldoController extends Controller
     {
         //
         $newSaldo = $saldo->update($request->all());
-        return response()->json($newSaldo);
+        return response()->json($saldo);
     }
 
     /**

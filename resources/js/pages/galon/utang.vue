@@ -119,8 +119,6 @@ export default {
   },
   data() {
     return {
-      dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
-      dataEdit: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       loading: true,
     };
   },

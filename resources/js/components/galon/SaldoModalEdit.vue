@@ -18,39 +18,12 @@
         </div>
         <div class="form-floating mb-3">
           <input
-            v-model="form.harga_jual"
+            v-model="form.total"
             type="text"
             class="form-control"
             placeholder="harga_jual"
           />
-          <label for="floatingInput">Harga Jual</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            v-model="form.harga_beli"
-            type="text"
-            class="form-control"
-            placeholder="harga_beli"
-          />
-          <label for="floatingInput">Harga Beli</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            v-model="form.jumlah"
-            type="text"
-            class="form-control"
-            placeholder="jumlah"
-          />
-          <label for="floatingInput">Jumlah</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            v-model="form.status"
-            type="text"
-            class="form-control"
-            placeholder="status"
-          />
-          <label for="floatingInput">Status</label>
+          <label for="floatingInput">Total</label>
         </div>
       </form>
     </div>
@@ -82,10 +55,7 @@ export default {
       form: new Form({
         id: "",
         nama: "",
-        harga_jual: "",
-        harga_beli: "",
-        jumlah: "",
-        status: "",
+        total:''
       }),
       showModal: false,
     };
@@ -100,10 +70,7 @@ export default {
     setSaldo(saldo) {
       this.form.id = saldo.id;
       this.form.nama = saldo.nama;
-      this.form.harga_jual = saldo.harga_jual;
-      this.form.harga_beli = saldo.harga_beli;
-      this.form.jumlah = saldo.jumlah;
-      this.form.status = saldo.status;
+      this.form.total = saldo.total;
     },
   },
 };

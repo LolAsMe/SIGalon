@@ -56,7 +56,7 @@ class DetailTransaksiController extends Controller
     {
         //
         $newDetailTransaksi = $detailTransaksi->update($request->all());
-        return response()->json($newDetailTransaksi);
+        return response()->json($detailTransaksi);
     }
 
     /**

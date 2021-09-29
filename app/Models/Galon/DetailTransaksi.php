@@ -52,4 +52,9 @@ class DetailTransaksi extends Model
     protected $table = 'detail_transaksi';
     protected $guarded = [];
     protected $appends = [];
+
+    public function transaksi()
+    {
+        return $this->BelongTo(Transaksi::class);
+    }
 }

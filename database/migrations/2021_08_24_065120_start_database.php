@@ -21,7 +21,6 @@ class StartDatabase extends Migration
             $table->decimal('harga_jual');
             $table->decimal('harga_beli');
             $table->integer('jumlah')->default(1);
-            $table->decimal('total',12)->default(0);
             $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
             $table->string('keterangan')->default('aset');
             $table->softDeletes();
@@ -33,29 +32,31 @@ class StartDatabase extends Migration
             $table->morphs('owner');
             $table->foreignId('detail_transaksi_id')->nullable();
             $table->string('nama')->default('log');
+            $table->dateTime('tanggal')->useCurrent();
+            $table->integer('jumlah')->default(1);
             $table->decimal('debit')->default(0);
             $table->decimal('kredit')->default(0);
-            $table->decimal('total',12)->default(0);
-            $table->string('keterangan')->default('aset');
+            $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
         });
 
         Schema::create('saldo', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->decimal('total', 12)->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
 
 
-
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tanggal')->useCurrent();
-            $table->decimal('total', 12);
-            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
-            $table->string('keterangan')->nullable();
+            $table->decimal('debit', 12)->default(0);
+            $table->decimal('kredit', 12)->default(0);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Pending');
+            $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -63,14 +64,11 @@ class StartDatabase extends Migration
         Schema::create('detail_transaksi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaksi_id');
-            $table->foreignId('aset_id');
             $table->integer('jumlah')->default(1);
             $table->decimal('harga');
             $table->decimal('debit')->default(0);
             $table->decimal('kredit')->default(0);
-            $table->decimal('total')->default(0);
-            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Ok');
-            $table->string('keterangan')->nullable();
+            $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -80,10 +78,11 @@ class StartDatabase extends Migration
             $table->foreignId('aset_id')->nullable();
             $table->string('nama');
             $table->integer('jumlah')->default(1);
-            $table->decimal('bayar')->default(0);
             $table->decimal('harga', 7);
             $table->decimal('total',12);
-            $table->string('keterangan')->nullable();
+            $table->decimal('bayar')->default(0);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Pending');
+            $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -93,10 +92,11 @@ class StartDatabase extends Migration
             $table->foreignId('aset_id')->nullable();
             $table->string('nama');
             $table->integer('jumlah')->default(1);
-            $table->decimal('bayar')->default(0);
             $table->decimal('harga');
             $table->decimal('total',12);
-            $table->string('keterangan')->nullable();
+            $table->decimal('bayar')->default(0);
+            $table->enum('status', ['Pending', 'Canceled', 'Paid Out', 'Ok', 'Draft'])->default('Draft');
+            $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
         });

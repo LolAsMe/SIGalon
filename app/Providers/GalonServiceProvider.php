@@ -17,6 +17,9 @@ class GalonServiceProvider extends ServiceProvider
     {
         //
         // $this->app->bind(GalonServiceContract::class, GalonService::class);
+        $this->app->bind(GalonService::class, function ($app) {
+            return new GalonService();
+        });
     }
 
     /**

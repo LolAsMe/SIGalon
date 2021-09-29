@@ -15,15 +15,15 @@ export const getters = {
 // mutations
 export const mutations = {
   setSaldos: (state, saldos) => (state.saldos = saldos),
-  editAset(state, nAset) {
-    const oldAset = state.saldos.find(saldo => saldo.id === nAset.id);
-    if (oldAset) {
+  editSaldo(state, nSaldo) {
+    const oldSaldo = state.saldos.find(saldo => saldo.id === nSaldo.id);
+    if (oldSaldo) {
       // not creating a new object but modifying old object here
-      Object.assign(oldAset, nAset)
+      Object.assign(oldSaldo, nSaldo)
     }
   },
-  addAset: (state, saldo) => state.saldos.push(saldo),
-  deleteAset: (state, id) => state.saldos = state.saldos.filter(saldos => saldos.id !== id)
+  addSaldo: (state, saldo) => state.saldos.push(saldo),
+  deleteSaldo: (state, id) => state.saldos = state.saldos.filter(saldos => saldos.id !== id)
 }
 
 // actions

@@ -20,7 +20,6 @@ class AsetSeeder extends Seeder
             'harga_jual'=>10000,
             'harga_beli'=>8000,
             'jumlah'=>50,
-            'total'=>500000,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -29,7 +28,6 @@ class AsetSeeder extends Seeder
             'harga_jual'=>40000,
             'harga_beli'=>38000,
             'jumlah'=>50,
-            'total'=>2000000,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -38,7 +36,6 @@ class AsetSeeder extends Seeder
             'harga_jual'=>30000,
             'harga_beli'=>27500,
             'jumlah'=>16,
-            'total'=>480000,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

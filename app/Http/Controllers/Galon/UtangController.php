@@ -56,7 +56,7 @@ class UtangController extends Controller
     {
         //
         $newUtang = $utang->update($request->all());
-        return response()->json($newUtang);
+        return response()->json($utang);
     }
 
     /**

@@ -36,14 +36,49 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\Log[] $log
  * @property-read int|null $log_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\DetailTransaksi[] $detail
+ * @property-read int|null $detail_count
  */
 class Transaksi extends Model
 {
     use HasFactory;
-    use HasLog;
     use SoftDeletes;
 
     protected $table = 'transaksi';
+    protected $lastDetail = 0;
     protected $guarded = [];
     protected $appens = [];
+
+    protected $detailAttribute = [];
+
+    public function detail()
+    {
+        return $this->hasMany(DetailTransaksi::class);
+    }
+
+    public function createDetail()
+    {
+        $this->lastDetail = $this->detail()->create($this->detailAttribute);
+    }
+
+    public function getLastDetail()
+    {
+        return $this->lastDetail;
+    }
+    public function setDetailAttribute(array $attribute)
+    {
+        isset($attribute['jumlah']) ? $this->detailAttribute['jumlah'] = $attribute['jumlah'] : '';
+        $this->detailAttribute['debit'] = $attribute['debit'] ?? 0;
+        $this->detailAttribute['kredit'] = $attribute['kredit'] ?? 0;
+        isset($attribute['keterangan']) ? $this->detailAttribute['keterangan'] = $attribute['keterangan'] :0;
+        isset($attribute['harga']) ? $this->detailAttribute['harga'] = $attribute['harga'] :0;
+        return $this;
+    }
+
+    public function transact()
+    {
+        $this->increment('debit',$this->detailAttribute['debit']);
+        $this->increment('kredit',$this->detailAttribute['kredit']);
+        $this->createDetail();
+    }
 }

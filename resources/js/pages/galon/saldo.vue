@@ -72,7 +72,6 @@
           </template>
         </v-table>
         <saldo-modal-show ref="saldoModal"></saldo-modal-show>
-
         <saldo-modal-edit ref="editModal"></saldo-modal-edit>
       </card>
     </div>
@@ -107,20 +106,18 @@ export default {
     items: function () {
       if (!this.loading && this.saldos) {
         return this.saldos.map(
-          ({ id, nama, harga_jual, harga_beli, jumlah, status }) => {
-            return { id, nama, harga_jual, harga_beli, jumlah, status };
+          ({ id, nama, total }) => {
+            return { id, nama, total };
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah", "Status"];
+      return ["ID", "Nama", "total"];
     },
   },
   data() {
     return {
-      dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
-      dataEdit: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       loading: true,
     };
   },

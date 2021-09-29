@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SaldoSeeder extends Seeder
 {
@@ -14,5 +15,11 @@ class SaldoSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('saldo')->insert([
+            'nama'=>'Utama',
+            'total'=>0,
+            'created_at'=>now(),
+            'updated_at'=>now()
+        ]);
     }
 }

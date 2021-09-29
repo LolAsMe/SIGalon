@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Galon;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galon\Transaksi;
+use App\Services\Galon\GalonService;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
+
+    protected $galonService;
+    public function __construct(GalonService $galonService) {
+        $this->galonService = $galonService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +33,21 @@ class TransaksiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+    {
+        //
+         $transaksi = json_decode($request->getContent(),true);
+        $this->galonService->transact($transaksi);
+        // $transaksi = Transaksi::create($request->all());
+        // return response($transaksi);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store2(Request $request)
     {
         //
         $transaksi = Transaksi::create($request->all());
@@ -56,7 +77,7 @@ class TransaksiController extends Controller
     {
         //
         $newTransaksi = $transaksi->update($request->all());
-        return response()->json($newTransaksi);
+        return response()->json($transaksi);
     }
 
     /**

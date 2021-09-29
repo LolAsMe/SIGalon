@@ -56,7 +56,7 @@ class LogController extends Controller
     {
         //
         $newLog = $log->update($request->all());
-        return response()->json($newLog);
+        return response()->json($log);
     }
 
     /**

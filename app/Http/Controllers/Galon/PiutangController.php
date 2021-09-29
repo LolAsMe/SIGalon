@@ -56,7 +56,7 @@ class PiutangController extends Controller
     {
         //
         $newPiutang = $piutang->update($request->all());
-        return response()->json($newPiutang);
+        return response()->json($piutang);
     }
 
     /**

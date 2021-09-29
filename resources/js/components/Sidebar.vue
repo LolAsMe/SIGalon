@@ -54,6 +54,15 @@
         </li>
         <li>
           <router-link
+            :to="{ name: 'saldo' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Saldo</span></router-link
+          >
+        </li>
+        <li>
+          <router-link
             :to="{ name: 'detail.transaksi' }"
             class="nav-link px-0 align-middle"
           >
@@ -79,15 +88,7 @@
             <span class="ms-1 d-none d-sm-inline">Piutang</span></router-link
           >
         </li>
-        <li>
-          <router-link
-            :to="{ name: 'saldo' }"
-            class="nav-link px-0 align-middle"
-          >
-            <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Saldo</span></router-link
-          >
-        </li>
+
         <li>
           <router-link
             :to="{ name: 'transaksi' }"
