@@ -38,6 +38,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $log_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\DetailTransaksi[] $detail
  * @property-read int|null $detail_count
+ * @property string $debit
+ * @property string $kredit
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereDebit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereKredit($value)
  */
 class Transaksi extends Model
 {
@@ -67,7 +71,7 @@ class Transaksi extends Model
     }
     public function setDetailAttribute(array $attribute)
     {
-        isset($attribute['jumlah']) ? $this->detailAttribute['jumlah'] = $attribute['jumlah'] : '';
+        isset($attribute['jumlah']) ? $this->detailAttribute['jumlah'] = $attribute['jumlah'] : 0;
         $this->detailAttribute['debit'] = $attribute['debit'] ?? 0;
         $this->detailAttribute['kredit'] = $attribute['kredit'] ?? 0;
         isset($attribute['keterangan']) ? $this->detailAttribute['keterangan'] = $attribute['keterangan'] :0;

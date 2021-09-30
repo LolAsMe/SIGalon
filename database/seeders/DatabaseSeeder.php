@@ -17,8 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AsetSeeder::class,
             AdminSeeder::class,
+            DistributorSeeder::class,
+            SuplierSeeder::class,
             UserSeeder::class,
-            SaldoSeeder::class
+            SaldoSeeder::class,
+            LabaSeeder::class
         ]);
     }
 }

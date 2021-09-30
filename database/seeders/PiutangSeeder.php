@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PiutangSeeder extends Seeder
 {
@@ -14,5 +15,6 @@ class PiutangSeeder extends Seeder
     public function run()
     {
         //
+
     }
 }

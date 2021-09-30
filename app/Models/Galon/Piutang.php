@@ -42,6 +42,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\Log[] $log
  * @property-read int|null $log_count
+ * @property string $payer_type
+ * @property int $payer_id
+ * @property string $status
+ * @property-read Model|\Eloquent $payer
+ * @method static \Illuminate\Database\Eloquent\Builder|Piutang wherePayerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Piutang wherePayerType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Piutang whereStatus($value)
  */
 class Piutang extends Model
 {
@@ -53,4 +60,8 @@ class Piutang extends Model
     protected $guarded = [];
     protected $appens = [];
 
+    public function payer()
+    {
+        return $this->morphTo();
+    }
 }

@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|DetailTransaksi withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DetailTransaksi withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \App\Models\Galon\Transaksi $transaksi
  */
 class DetailTransaksi extends Model
 {
@@ -55,6 +56,6 @@ class DetailTransaksi extends Model
 
     public function transaksi()
     {
-        return $this->BelongTo(Transaksi::class);
+        return $this->belongsTo(Transaksi::class);
     }
 }

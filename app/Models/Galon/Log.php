@@ -42,6 +42,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Log withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Log withoutTrashed()
  * @mixin \Eloquent
+ * @property string $tanggal
+ * @property int $jumlah
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereJumlah($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereTanggal($value)
  */
 class Log extends Model
 {

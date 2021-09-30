@@ -58,13 +58,11 @@ class Saldo extends Model
     protected $guarded = [];
     protected $appends = [];
 
-    public function transact($detailTransaksi = null)
-    {
-        $this->total = $this->total + $this->logAttribute['debit'] - $this->logAttribute['kredit'];
-        isset($detailTransaksi->id) ? $this->logAttribute['detail_transaksi_id'] = $detailTransaksi->id :0;
-        // $this->jumlah = $this->jumlah + $this->logAttribute['jumlah'] - $this->logAttribute['jumlah'];
-        // $this->jumlah = $this->logAttribute['debit'] > $this->logAttribute['kredit'] ? $this->jumlah + $this->logAttribute['jumlah'] : $this->jumlah - $this->logAttribute['jumlah'];
-        $this->save();
-        $this->createLog();
-    }
+    // public function transact($detailTransaksi = null)
+    // {
+    //     $this->total = $this->total + $this->logAttribute['debit'] - $this->logAttribute['kredit'];
+    //     isset($detailTransaksi->id) ? $this->logAttribute['detail_transaksi_id'] = $detailTransaksi->id :0;
+    //     $this->save();
+    //     $this->createLog();
+    // }
 }

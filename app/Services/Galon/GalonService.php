@@ -3,80 +3,68 @@
 namespace App\Services\Galon;
 
 use App\Models\Galon\Aset;
+use App\Models\Galon\Laba;
+use App\Models\Galon\Piutang;
 use App\Models\Galon\Saldo;
 use App\Models\Galon\Transaksi;
+use App\Models\Galon\Utang;
 use App\Services\Galon\Transaksi\AsetTransaksi;
+use App\Services\Galon\Transaksi\LabaTransaksi;
+use App\Services\Galon\Transaksi\SaldoTransaksi;
+use App\Services\Galon\Transaksi\UtangTransaksi;
 
 class GalonService
 {
-    public function setUpTransaksi($tipe)
+    public function setUpTransaksi($attribute)
     {
-        if ($tipe == 'Aset') {
-            return new Aset();
-        } else if ($tipe == 'Saldo') {
-            return new Saldo();
-        } else if ($tipe == 'Utang') {
-        } else if ($tipe == 'Piutang') {
+        if ($attribute['tipe'] == 'Aset') {
+            return new AsetTransaksi($attribute);
+            // return Aset::find($attribute['id']);
+        } else if ($attribute['tipe'] == 'Saldo') {
+            return new SaldoTransaksi($attribute);
+        } else if ($attribute['tipe'] == 'Utang') {
+
+            return new UtangTransaksi($attribute);
+
+        } else if ($attribute['tipe'] == 'Piutang') {
+            return Piutang::firstOrCreate(
+                [
+                    'payer_type' => $attribute['payer_type'],
+                    'payer_id' => $attribute['payer_id'],
+                    'aset_id' => $attribute['aset_id'],
+                ],
+                [
+                    'jumlah' => $attribute['jumlah'],
+                    'keterangan' => $attribute['keterangan'],
+                ]
+            );
+        } else if ($attribute['tipe'] == 'Laba') {
+            // $id = $attribute['id'] ?? 1;
+            // return Laba::find(1);
+            return new LabaTransaksi($attribute);
         }
     }
     public function transact(array $attributes)
     {
-        // check transaksi
         Transaksi::whereStatus('Draft')->update(['status' => 'Canceled']);
 
-        $transaksi = Transaksi::create(['status'=>'Draft']);
-        // create transaksi status draft
+        $transaksi = Transaksi::create(['status' => 'Draft']);
 
-        // request
-        // jumlah:4
-        // debit:40000
-        // total:40000
-        // keterangan:test
-        // harga:10000
-        // sender_type:aset
-        // sender_id:2
-        // receiver_type:saldo
-        // receiver_id:1
-
-        // $requests = $this->filterTransaksiRequest($attribute);
-        // dd($requests);
         foreach ($attributes as $attribute) {
-            $transaksi->setDetailAttribute($attribute)->transact();
-            $lastDetail = $transaksi->getLastDetail();
-            $targetTransaksi = $this->setUpTransaksi($attribute['tipe'])->find($attribute['id']);
-            $targetTransaksi->setLogAttribute($attribute)->transact($lastDetail);
-        }
+            try {
+                $transaksi->refresh();
 
+                $attribute['transaksi'] = $transaksi;
+                // dd($attribute['detail_transaksi_id']);
+
+                $this->setUpTransaksi($attribute)->transact();
+                // $targetTransaksi->setLogAttribute($attribute)->transact();
+            } catch (\Throwable $th) {
+                dd($th);
+            }
+        }
         $transaksi->status = 'Ok';
         $transaksi->save();
         dd('berhasil');
-
-        // transaksi status Ok
-        // return
-
-        // $transaksi = Transaksi::create(['total' => $attribute['total']]);
-        // $detail = $transaksi->detail()->create($attribute);
-        // dd($detail);
-    }
-
-    public function filterTransaksiRequest(array $attribute)
-    {
-        // $requests = [];
-        // $requestAttribute = [];
-        // $requestAttribute['debit'] = $attribute['debit'] ?? 0;
-        // $requestAttribute['kredit'] = $attribute['kredit'] ?? 0;
-        // $requestAttribute['keterangan'] = $attribute['keterangan'];
-        // $requestAttribute['harga'] = $attribute['harga'];
-        // $requestAttribute['jumlah'] = $attribute['receiver_jumlah'];
-        // $requestAttribute['tipe'] = $attribute['receiver_type'];
-        // $requestAttribute['id'] = $attribute['receiver_id'];
-        // array_push($requests, $requestAttribute);
-        // $requestAttribute['debit'] = $attribute['kredit'] ?? 0;
-        // $requestAttribute['kredit'] = $attribute['debit'] ?? 0;
-        // $requestAttribute['jumlah'] = $attribute['sender_jumlah'];
-        // $requestAttribute['tipe'] = $attribute['sender_type'];
-        // $requestAttribute['id'] = $attribute['sender_id'];
-        // array_push($requests, $requestAttribute);
-        // return $requests;
     }
 }

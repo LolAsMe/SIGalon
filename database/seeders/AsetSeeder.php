@@ -16,6 +16,7 @@ class AsetSeeder extends Seeder
     {
         //
         DB::table('aset')->insert([
+            'id'=>1,
             'nama'=>'Isi Galon',
             'harga_jual'=>10000,
             'harga_beli'=>8000,
@@ -24,6 +25,7 @@ class AsetSeeder extends Seeder
             'updated_at'=>now()
         ]);
         DB::table('aset')->insert([
+            'id'=>2,
             'nama'=>'Galon',
             'harga_jual'=>40000,
             'harga_beli'=>38000,
@@ -32,10 +34,11 @@ class AsetSeeder extends Seeder
             'updated_at'=>now()
         ]);
         DB::table('aset')->insert([
+            'id'=>3,
             'nama'=>'Kardus',
             'harga_jual'=>30000,
             'harga_beli'=>27500,
-            'jumlah'=>16,
+            'jumlah'=>20,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
