@@ -3,6 +3,7 @@
 namespace App\Services\Galon\Transaksi;
 
 use App\Models\Galon\Aset;
+use App\Models\User;
 
 class AsetTransaksi extends AbstractTransaksi
 {
@@ -11,7 +12,7 @@ class AsetTransaksi extends AbstractTransaksi
     {
         $id = $this->attribute['id'] ?? 1;
         $this->targetTransaksi = Aset::find($id);
-        $this->attribute['harga'] = $this->transaksi['harga_jual'];
+        $this->attribute['harga'] = $this->targetTransaksi->harga_beli;
         if ($this->attribute['kode'] == "debit") {
             $this->targetTransaksi->jumlah += $this->attribute['jumlah'];
             $this->attribute['debit'] = $this->targetTransaksi->harga_beli * $this->attribute['jumlah'];
@@ -19,5 +20,6 @@ class AsetTransaksi extends AbstractTransaksi
             $this->targetTransaksi->jumlah -= $this->attribute['jumlah'];
             $this->attribute['kredit'] = $this->targetTransaksi->harga_beli * $this->attribute['jumlah'];
         }
+        $this->targetTransaksi->save();
     }
 }

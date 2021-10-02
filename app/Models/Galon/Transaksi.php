@@ -42,8 +42,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $kredit
  * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereDebit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereKredit($value)
+ * @property-read Model|\Eloquent $payer
  */
-class Transaksi extends Model
+class Transaksi extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;
@@ -76,6 +77,7 @@ class Transaksi extends Model
         $this->detailAttribute['kredit'] = $attribute['kredit'] ?? 0;
         isset($attribute['keterangan']) ? $this->detailAttribute['keterangan'] = $attribute['keterangan'] :0;
         isset($attribute['harga']) ? $this->detailAttribute['harga'] = $attribute['harga'] :0;
+        isset($attribute['total']) ? $this->detailAttribute['total'] = $attribute['total'] :0;
         return $this;
     }
 
@@ -84,5 +86,10 @@ class Transaksi extends Model
         $this->increment('debit',$this->detailAttribute['debit']);
         $this->increment('kredit',$this->detailAttribute['kredit']);
         $this->createDetail();
+    }
+
+    public function payer()
+    {
+        return $this->morphTo();
     }
 }

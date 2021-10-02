@@ -2,12 +2,7 @@
 
 namespace App\Services\Galon\Transaksi;
 
-use App\Models\Galon\Aset;
-use App\Models\Galon\Laba;
-use App\Models\Galon\Piutang;
-use App\Models\Galon\Saldo;
 use App\Models\Galon\Transaksi;
-use App\Models\Galon\Utang;
 
 abstract class AbstractTransaksi
 {
@@ -20,9 +15,10 @@ abstract class AbstractTransaksi
         $this->attribute = $attribute;
         $this->transaksi = $attribute['transaksi'] ?? new Transaksi();
         unset($this->attribute['transaksi']);
-
         $this->attribute['debit'] = $this->attribute['debit'] ?? 0;
         $this->attribute['kredit'] = $this->attribute['kredit'] ?? 0;
+        $this->attribute['jumlah'] = $this->attribute['jumlah'] ?? 1;
+        $this->attribute['harga'] = $this->attribute['harga'] ?? 0;
     }
 
     abstract public function setTransaksi();
@@ -30,20 +26,30 @@ abstract class AbstractTransaksi
     public function transact()
     {
         $this->setTransaksi();
+        $this->updateTransaksi();
         $this->createDetailTransaksi();
         $this->targetTransaksi->save();
-        $this->createLog();
+        $this->createTargetTransaksiLog();
     }
-    public function createLog()
+    public function createTargetTransaksiLog()
     {
         $this->targetTransaksi->setLogAttribute($this->attribute)->createLog();
     }
     public function createDetailTransaksi()
     {
-        $this->transaksi->debit += $this->attribute['debit'] ?? 0;
-        $this->transaksi->kredit += $this->attribute['kredit'] ?? 0;
-        $this->transaksi->save();
+
         $this->transaksi->setDetailAttribute($this->attribute)->createDetail();
         $this->attribute['detail_transaksi_id'] = $this->transaksi->getLastDetail()->id;
+    }
+    public function updateTransaksi()
+    {
+        $this->transaksi->debit += $this->attribute['debit'] ?? 0;
+        $this->transaksi->kredit += $this->attribute['kredit'] ?? 0;
+        if($this->attribute['kredit']>$this->attribute['debit']){
+            $this->attribute['total'] = $this->transaksi->kredit;
+        }else{
+            $this->attribute['total'] = $this->transaksi->debit;
+        }
+        $this->transaksi->save();
     }
 }

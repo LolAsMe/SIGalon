@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Log whereJumlah($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Log whereTanggal($value)
  */
-class Log extends Model
+class Log extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;

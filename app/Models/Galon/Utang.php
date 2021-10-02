@@ -50,7 +50,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Utang wherePayerType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utang whereStatus($value)
  */
-class Utang extends Model
+class Utang extends \Eloquent
 {
     use HasFactory;
     use HasLog;

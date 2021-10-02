@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property-read \App\Models\Galon\Transaksi $transaksi
  */
-class DetailTransaksi extends Model
+class DetailTransaksi extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;

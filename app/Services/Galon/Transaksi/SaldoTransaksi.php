@@ -11,5 +11,6 @@ class SaldoTransaksi extends AbstractTransaksi
         $id = $this->attribute['id'] ?? 1;
         $this->targetTransaksi = Saldo::find($id);
         $this->targetTransaksi->total += $this->attribute['debit'] - $this->attribute['kredit'];
+
     }
 }

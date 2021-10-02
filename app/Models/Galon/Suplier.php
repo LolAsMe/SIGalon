@@ -2,6 +2,7 @@
 
 namespace App\Models\Galon;
 
+use App\Services\Traits\HasTransaksi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,11 +31,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Suplier withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Suplier withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\Transaksi[] $log
+ * @property-read int|null $log_count
+ * @property-write mixed $transaksi
  */
-class Suplier extends Model
+class Suplier extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;
+    use HasTransaksi;
 
     protected $table = 'suplier';
     protected $guarded = [];

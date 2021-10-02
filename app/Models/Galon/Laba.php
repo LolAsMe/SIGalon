@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Laba withoutTrashed()
  * @mixin \Eloquent
  */
-class Laba extends Model
+class Laba extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;

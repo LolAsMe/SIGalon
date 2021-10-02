@@ -1,8 +1,49 @@
 <template>
   <div class="row">
     <div class="col">
+      <div class="d-flex bd-highlight">
+        <div class="p-2 flex-grow-1 bd-highlight"><h4>Dashboard</h4></div>
+        <div class="p-2 bd-highlight">
+          <button class="btn btn-primary btn-sm" v-if="isRole('Admin')">
+            Payer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2">
       <card :title="'Dashboard'">
-        {{ "ini halaman Dashboard" }}
+        <div class="row">
+          <div class="col-6">
+            <div class="row">
+              <div class="col">
+                <v-table
+                  class="table table-sm align-middle"
+                  :items="items"
+                  :itemsTitle="itemsTitle"
+                >
+                </v-table>
+              </div>
+              <div class="col">
+                <v-table
+                  class="table table-sm align-middle"
+                  :items="items"
+                  :itemsTitle="itemsTitle"
+                >
+                </v-table>
+              </div>
+              <div class="col">
+                <v-table
+                  class="table table-sm align-middle"
+                  :items="items"
+                  :itemsTitle="itemsTitle"
+                >
+                </v-table>
+              </div>
+            </div>
+          </div>
+          <div class="col-6"></div>
+        </div>
       </card>
     </div>
   </div>
@@ -11,49 +52,41 @@
 <script>
 // import axios from 'axios'
 import { mapGetters } from "vuex";
-import UploadModal from "~/components/galon/UploadModal";
-
+import VTable from "~/components/VTable";
 export default {
   middleware: "auth",
-
-  // async asyncData () {
-  //   const { data: projects } = await axios.get('/api/projects')
-
-  //   return {
-  //     projects
-  //   }
-  // },
   computed: mapGetters({
     user: "auth/user",
   }),
-  // directives: {
-  //   role: {
-  //     // directive definition
-  //     bind: function (el, binding, vnode) {
-  //       if (true) {
-  //         // replace HTMLElement with comment node
-  //         const comment = document.createComment(" ");
-  //         Object.defineProperty(comment, "setAttribute", {
-  //           value: () => undefined,
-  //         });
-  //         vnode.elm = comment;
-  //         vnode.text = "test";
-  //         vnode.isComment = true;
-  //         vnode.context = undefined;
-  //         vnode.tag = undefined;
-  //         vnode.data.directives = undefined;
-
-  //         if (vnode.componentInstance) {
-  //           vnode.componentInstance.$el = comment;
-  //         }
-
-  //         if (el.parentNode) {
-  //           el.parentNode.replaceChild(comment, el);
-  //         }
-  //       }
-  //     },
-  //   },
-  // },
+  components: {
+    VTable,
+  },
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  computed: {
+    ...mapGetters({
+      asets: "aset/asets",
+    }),
+    items: function () {
+      if (!this.loading && this.asets) {
+        return this.asets.map(
+          ({ id, nama, harga_jual, harga_beli, jumlah }) => {
+            return { id, nama, harga_jual, harga_beli, jumlah };
+          }
+        );
+      }
+    },
+    itemsTitle: function () {
+      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah"];
+    },
+  },
+  created() {
+    this.$store.dispatch("aset/fetchAsets");
+    this.loading = false;
+  },
 
   metaInfo() {
     return { title: "Dashboard" };

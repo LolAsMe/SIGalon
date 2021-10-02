@@ -48,7 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $nama
  * @method static \Illuminate\Database\Eloquent\Builder|Saldo whereNama($value)
  */
-class Saldo extends Model
+class Saldo extends \Eloquent
 {
     use HasFactory;
     use SoftDeletes;

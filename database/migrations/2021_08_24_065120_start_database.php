@@ -35,8 +35,9 @@ class StartDatabase extends Migration
             $table->string('nama')->default('log');
             $table->dateTime('tanggal')->useCurrent();
             $table->integer('jumlah')->default(1);
-            $table->decimal('debit')->default(0);
-            $table->decimal('kredit')->default(0);
+            $table->decimal('debit',12)->default(0);
+            $table->decimal('kredit',12)->default(0);
+            $table->decimal('total', 12)->default(0);
             $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();
@@ -75,8 +76,9 @@ class StartDatabase extends Migration
             $table->foreignId('transaksi_id');
             $table->integer('jumlah')->default(1);
             $table->decimal('harga')->default(0);
-            $table->decimal('debit')->default(0);
-            $table->decimal('kredit')->default(0);
+            $table->decimal('debit',12)->default(0);
+            $table->decimal('kredit',12)->default(0);
+            $table->decimal('total', 12)->default(0);
             $table->string('keterangan')->default('-');
             $table->softDeletes();
             $table->timestamps();

@@ -37,8 +37,6 @@ class TransaksiController extends Controller
         //
          $transaksi = json_decode($request->getContent(),true);
         $this->galonService->transact($transaksi);
-        // $transaksi = Transaksi::create($request->all());
-        // return response($transaksi);
     }
 
     /**

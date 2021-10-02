@@ -31,7 +31,14 @@ trait HasLog
         $this->logAttribute['debit'] = $logAttribute['debit'] ?? 0;
         $this->logAttribute['kredit'] = $logAttribute['kredit'] ?? 0;
         isset($logAttribute['keterangan']) ? $this->logAttribute['keterangan'] = $logAttribute['keterangan'] : 0;
+        isset($this->total) ? $this->logAttribute['total']= $this->getTotal() : 0;
         return $this;
+
+
+    }
+    public function getTotal()
+    {
+        return $this->total;
     }
     // public function transact()
     // {

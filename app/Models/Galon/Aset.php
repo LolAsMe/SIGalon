@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Galon\Log[] $log
  * @property-read int|null $log_count
  */
-class Aset extends Model
+class Aset extends \Eloquent
 {
     use HasFactory;
     use HasLog;
@@ -52,4 +52,9 @@ class Aset extends Model
     protected $table = 'aset';
     protected $guarded = [];
     protected $appends = [];
+
+    public function getTotal()
+    {
+        return $this->total + (($this->logAttribute['debit'] - $this->logAttribute['kredit']) ?? 0);
+    }
 }
