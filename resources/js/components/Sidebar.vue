@@ -1,10 +1,16 @@
 <template>
   <div
     v-if="user"
-    class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white shadow"
+    class="
+      col-auto col-md-3 col-xl-2
+      px-sm-2 px-0
+      bg-white
+      shadow
+      d-none d-md-block
+    "
+    style="max-width: 190px"
   >
     <div
-      style="position: sticky"
       class="
         nav
         d-flex
@@ -31,7 +37,7 @@
             class="nav-link align-middle px-0"
           >
             <i class="fs-4 bi-house"></i>
-            <span class="ms-1 d-none d-sm-inline">Home</span>
+            <span class="ms-1 d-none d-md-inline">Home</span>
           </router-link>
         </li>
         <li>
@@ -40,7 +46,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-speedometer2"></i>
-            <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+            <span class="ms-1 d-none d-md-inline">Dashboard</span>
           </router-link>
         </li>
         <li>
@@ -49,7 +55,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Aset</span></router-link
+            <span class="ms-1 d-none d-md-inline">Aset</span></router-link
           >
         </li>
         <li>
@@ -58,7 +64,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Saldo</span></router-link
+            <span class="ms-1 d-none d-md-inline">Saldo</span></router-link
           >
         </li>
         <li>
@@ -67,16 +73,15 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Detail Transaksi</span></router-link
+            <span class="ms-1 d-none d-md-inline"
+              >Detail Transaksi</span
+            ></router-link
           >
         </li>
         <li>
-          <router-link
-            :to="{ name: 'log' }"
-            class="nav-link px-0 align-middle"
-          >
+          <router-link :to="{ name: 'log' }" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Log</span></router-link
+            <span class="ms-1 d-none d-md-inline">Log</span></router-link
           >
         </li>
         <li>
@@ -85,7 +90,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Piutang</span></router-link
+            <span class="ms-1 d-none d-md-inline">Piutang</span></router-link
           >
         </li>
 
@@ -95,7 +100,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Transaksi</span></router-link
+            <span class="ms-1 d-none d-md-inline">Transaksi</span></router-link
           >
         </li>
         <li>
@@ -104,7 +109,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-sm-inline">Utang</span></router-link
+            <span class="ms-1 d-none d-md-inline">Utang</span></router-link
           >
         </li>
 
@@ -116,7 +121,7 @@
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-people"></i>
-            <span class="ms-1 d-none d-sm-inline">User</span>
+            <span class="ms-1 d-none d-md-inline">User</span>
           </router-link>
         </li>
       </ul>

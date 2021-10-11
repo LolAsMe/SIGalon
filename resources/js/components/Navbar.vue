@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
+      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand app-name">
         {{ appName }}
       </router-link>
 
@@ -96,5 +96,9 @@ export default {
 
 .container {
   max-width: 9999px;
+}
+
+.app-name{
+  font-weight: bold;
 }
 </style>

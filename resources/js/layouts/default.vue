@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <sidebar />
-        <div class="col py-3">
+        <div class="col">
           <child />
         </div>
       </div>

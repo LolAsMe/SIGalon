@@ -18819,6 +18819,9 @@ svg:not(:root).svg-inline--fa {
 .container[data-v-6dde423b] {
   max-width: 9999px;
 }
+.app-name[data-v-6dde423b]{
+  font-weight: bold;
+}
 
 
 .modal-mask[data-v-3abfefa8] {
@@ -18930,6 +18933,27 @@ svg:not(:root).svg-inline--fa {
 .modal-enter .modal-container[data-v-53ab54d2],
 .modal-leave-active .modal-container[data-v-53ab54d2] {
   transform: scale(1.1);
+}
+
+
+.transaksi[data-v-61c0fcdd] {
+  margin-top: 0.3em;
+}
+.judul[data-v-61c0fcdd] {
+  margin-top: 0.5em;
+  text-align: center;
+}
+.sepertiga > div[data-v-61c0fcdd] {
+  width: 33.33333333%;
+}
+h4[data-v-61c0fcdd] {
+  font-weight: bold;
+}
+.item[data-v-61c0fcdd] {
+  margin-top: 0.4em;
+}
+.input-in-out[data-v-61c0fcdd] {
+  height: 20px;
 }
 
 
