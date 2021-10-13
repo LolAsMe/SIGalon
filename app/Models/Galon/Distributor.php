@@ -49,8 +49,10 @@ class Distributor extends \Eloquent
     {
         return $this->morphMany(Utang::class, 'payer');
     }
+
     public function piutang()
     {
         return $this->morphMany(Piutang::class, 'payer');
     }
+
 }

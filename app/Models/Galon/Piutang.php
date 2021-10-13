@@ -64,4 +64,9 @@ class Piutang extends \Eloquent
     {
         return $this->morphTo();
     }
+
+    public function aset()
+    {
+        return $this->belongsTo(Aset::class);
+    }
 }

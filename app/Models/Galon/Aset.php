@@ -57,4 +57,13 @@ class Aset extends \Eloquent
     {
         return $this->total + (($this->logAttribute['debit'] - $this->logAttribute['kredit']) ?? 0);
     }
+
+    public function piutang()
+    {
+        return $this->hasMany(Piutang::class);
+    }
+    public function utang()
+    {
+        return $this->hasMany(Utang::class);
+    }
 }

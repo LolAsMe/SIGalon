@@ -2,22 +2,57 @@
   <div class="row mb-5 mx-md-4">
     <div class="col transaksi">
       <div class="judul"><h4>Transaksi</h4></div>
-
       <div class="d-flex flex-row-reverse">
-        <a class="btn btn-primary btn-sm">Pembayar</a>
+        <a class="btn btn-primary btn-sm" @click="showPayer = !showPayer">{{
+          payer.nama
+        }}</a>
+      </div>
+      <div v-show="showPayer" class="mt-1">
+        <ul
+          class="list-group"
+          v-for="distributor in distributors"
+          :key="distributor.id"
+        >
+          <li
+            class="list-group-item mt-1"
+            @click="(payer_id = distributor.id), (showPayer = !showPayer)"
+          >
+            {{ distributor.nama }}
+          </li>
+        </ul>
       </div>
       <div class="d-flex pt-1">
-        <button class="btn btn-primary btn-sm me-auto">Add Item</button>
-        <button class="btn btn-primary btn-sm">Jumlah Utang/Piutang</button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm me-auto"
+          @click="showItemList = !showItemList"
+        >
+          Add Item
+        </button>
+        <button v-show="utang" class="btn btn-secondary btn-sm">
+          {{ utang }}
+        </button>
       </div>
     </div>
-    <div class="col-12">
+    <div v-show="showItemList" class="mt-1" id="addItem">
+      <ul class="list-group" v-for="(aset, index) in asets" :key="aset.id">
+        <li
+          class="list-group-item mt-1 border"
+          :class="{ 'border-success': showItem[index] }"
+          @click="showItemData(index)"
+        >
+          {{ aset.nama }}
+        </li>
+      </ul>
+      <button class="mt-1" @click="showItemList = !showItemList">Close</button>
+    </div>
+    <div v-if="!loading" class="col-12">
       <div class="card">
         <div class="card-body p-0">
-          <div class="item border border-primary p-2">
+          <div v-if="showItem[0]" class="item border border-primary p-2">
             <div class="d-flex sepertiga">
               <div>Air Galon</div>
-              <div class="text-center">33x</div>
+              <div class="text-center">{{ asets[0].jumlah }}</div>
             </div>
             <div class="d-flex mt-2">
               <div class="input-group input-in-out input-group-sm mb-3">
@@ -25,6 +60,7 @@
                   >Masuk</span
                 >
                 <input
+                  v-model="jumlahMasuk"
                   type="number"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -36,6 +72,7 @@
                   >Keluar</span
                 >
                 <input
+                  v-model="jumlahKeluar"
                   type="number"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -47,19 +84,59 @@
               class="d-inline-flex justify-content-evenly"
               style="width: 49.2%"
             >
-              <button class="btn btn-exsm btn-secondary">+5</button>
-              <button class="btn btn-exsm btn-secondary">+1</button>
-              <button class="btn btn-exsm btn-secondary">-1</button>
-              <button class="btn btn-exsm btn-secondary">-5</button>
+              <button
+                @click="jumlahMasuk += 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                +5
+              </button>
+              <button
+                @click="jumlahMasuk += 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                +1
+              </button>
+              <button
+                @click="jumlahMasuk -= 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                -1
+              </button>
+              <button
+                @click="jumlahMasuk -= 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                -5
+              </button>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
               style="width: 49.2%"
             >
-              <button class="btn btn-exsm btn-secondary">+5</button>
-              <button class="btn btn-exsm btn-secondary">+1</button>
-              <button class="btn btn-exsm btn-secondary">-1</button>
-              <button class="btn btn-exsm btn-secondary">-5</button>
+              <button
+                @click="jumlahKeluar += 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                +5
+              </button>
+              <button
+                @click="jumlahKeluar += 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                +1
+              </button>
+              <button
+                @click="jumlahKeluar -= 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                -1
+              </button>
+              <button
+                @click="jumlahKeluar -= 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                -5
+              </button>
             </div>
             <div class="d-flex sepertiga mt-3">
               <div class="input-group input-in-out input-group-sm mb-3">
@@ -67,31 +144,62 @@
                   >jumlah</span
                 >
                 <input
+                  v-model="jumlahAir"
                   type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp 10 000</div>
-              <div class="text-end">Rp 20 000</div>
+              <div class="text-center">x Rp {{ asets[0].harga_jual }}</div>
+              <div class="text-end">Rp {{ totalAir }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
               style="width: 100%"
             >
-              <button class="btn btn-exsm btn-secondary">+10</button>
-              <button class="btn btn-exsm btn-secondary">+5</button>
-              <button class="btn btn-exsm btn-secondary">+1</button>
-              <button class="btn btn-exsm btn-secondary">-1</button>
-              <button class="btn btn-exsm btn-secondary">-5</button>
-              <button class="btn btn-exsm btn-secondary">-10</button>
+              <button
+                @click="jumlahAir += 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                +10
+              </button>
+              <button
+                @click="jumlahAir += 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                +5
+              </button>
+              <button
+                @click="jumlahAir += 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                +1
+              </button>
+              <button
+                @click="jumlahAir -= 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                -1
+              </button>
+              <button
+                @click="jumlahAir -= 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                -5
+              </button>
+              <button
+                @click="jumlahAir -= 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                -10
+              </button>
             </div>
           </div>
-          <div class="item border border-primary p-2">
+          <div v-if="showItem[1]" class="item border border-primary p-2">
             <div class="d-flex sepertiga">
               <div>Galon</div>
-              <div class="text-center">50x</div>
+              <div class="text-center">{{ asets[1].jumlah }}</div>
             </div>
             <div class="d-flex sepertiga">
               <div class="input-group input-in-out input-group-sm mb-3">
@@ -99,31 +207,62 @@
                   >jumlah</span
                 >
                 <input
+                  v-model="jumlahGalon"
                   type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp 35 000</div>
-              <div class="text-end">Rp 35 000</div>
+              <div class="text-center">x Rp {{ asets[1].harga_jual }}</div>
+              <div class="text-end">Rp {{ totalGalon }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
               style="width: 100%"
             >
-              <button class="btn btn-exsm btn-secondary">+10</button>
-              <button class="btn btn-exsm btn-secondary">+5</button>
-              <button class="btn btn-exsm btn-secondary">+1</button>
-              <button class="btn btn-exsm btn-secondary">-1</button>
-              <button class="btn btn-exsm btn-secondary">-5</button>
-              <button class="btn btn-exsm btn-secondary">-10</button>
+              <button
+                @click="jumlahGalon += 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                +10
+              </button>
+              <button
+                @click="jumlahGalon += 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                +5
+              </button>
+              <button
+                @click="jumlahGalon += 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                +1
+              </button>
+              <button
+                @click="jumlahGalon -= 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                -1
+              </button>
+              <button
+                @click="jumlahGalon -= 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                -5
+              </button>
+              <button
+                @click="jumlahGalon -= 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                -10
+              </button>
             </div>
           </div>
-          <div class="item border border-primary p-2">
+          <div v-if="showItem[2]" class="item border border-primary p-2">
             <div class="d-flex sepertiga">
               <div>Kardus</div>
-              <div>20x</div>
+              <div class="text-center">{{ asets[2].jumlah }}</div>
             </div>
             <div class="d-flex sepertiga">
               <div class="input-group input-in-out input-group-sm mb-3">
@@ -131,44 +270,128 @@
                   >jumlah</span
                 >
                 <input
+                  v-model="jumlahKardus"
                   type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp 30 000</div>
-              <div class="text-end">Rp 30 000</div>
+              <div class="text-center">x Rp {{ asets[2].harga_jual }}</div>
+              <div class="text-end">Rp {{ totalKardus }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
               style="width: 100%"
             >
-              <button class="btn btn-exsm btn-secondary">+10</button>
-              <button class="btn btn-exsm btn-secondary">+5</button>
-              <button class="btn btn-exsm btn-secondary">+1</button>
-              <button class="btn btn-exsm btn-secondary">-1</button>
-              <button class="btn btn-exsm btn-secondary">-5</button>
-              <button class="btn btn-exsm btn-secondary">-10</button>
+              <button
+                @click="jumlahKardus += 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                +10
+              </button>
+              <button
+                @click="jumlahKardus += 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                +5
+              </button>
+              <button
+                @click="jumlahKardus += 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                +1
+              </button>
+              <button
+                @click="jumlahKardus -= 1"
+                class="btn btn-exsm btn-secondary"
+              >
+                -1
+              </button>
+              <button
+                @click="jumlahKardus -= 5"
+                class="btn btn-exsm btn-secondary"
+              >
+                -5
+              </button>
+              <button
+                @click="jumlahKardus -= 10"
+                class="btn btn-exsm btn-secondary"
+              >
+                -10
+              </button>
             </div>
           </div>
           <div class="item border border-primary p-2">
             <div class="d-flex pt-1">
               <div class="me-auto">Jumlah</div>
-              <div>Rp 85 000</div>
+              <div>Rp {{ jumlah }}</div>
             </div>
             <div class="d-flex pt-1">
-              <div class="me-auto">Total</div>
-              <div>Rp 75 000</div>
+              <div class="me-auto">Bayar</div>
+              <div>Rp {{ bayar }}</div>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 100%"
+            >
+              <button
+                @click="bayar += 50000"
+                class="btn btn-exsm btn-secondary"
+              >
+                +50
+              </button>
+              <button @click="bayar += 5000" class="btn btn-exsm btn-secondary">
+                +5
+              </button>
+              <button @click="bayar += 1000" class="btn btn-exsm btn-secondary">
+                +1
+              </button>
+              <button @click="bayar -= 1000" class="btn btn-exsm btn-secondary">
+                -1
+              </button>
+              <button @click="bayar -= 5000" class="btn btn-exsm btn-secondary">
+                -5
+              </button>
+              <button
+                @click="bayar -= 50000"
+                class="btn btn-exsm btn-secondary"
+              >
+                -50
+              </button>
             </div>
             <div class="d-flex pt-1">
               <div class="me-auto">Uang</div>
-              <div>Rp 100 000</div>
+              <div>Rp {{ uang }}</div>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 100%"
+            >
+              <button @click="uang += 50000" class="btn btn-exsm btn-secondary">
+                +50
+              </button>
+              <button @click="uang += 5000" class="btn btn-exsm btn-secondary">
+                +5
+              </button>
+              <button @click="uang += 1000" class="btn btn-exsm btn-secondary">
+                +1
+              </button>
+              <button @click="uang -= 1000" class="btn btn-exsm btn-secondary">
+                -1
+              </button>
+              <button @click="uang -= 5000" class="btn btn-exsm btn-secondary">
+                -5
+              </button>
+              <button @click="uang -= 50000" class="btn btn-exsm btn-secondary">
+                -50
+              </button>
             </div>
             <div class="d-flex pt-1">
               <div class="me-auto">Kembali</div>
-              <div>Rp 25 000</div>
+              <div>Rp {{ kembali }}</div>
             </div>
+            <div>Keterangan : {{ sisaGalon }} Galon</div>
           </div>
           <button class="btn btn-primary btn-sm mt-1">Submit</button>
         </div>
@@ -176,6 +399,108 @@
     </div>
   </div>
 </template>
+
+<script>
+import * as vuex from "vuex";
+export default {
+  middleware: "auth",
+  data() {
+    return {
+      showItemList: false,
+      showPayer: false,
+      showItem: [true, false, false],
+      payer_id: 1,
+      jumlahMasuk: 1,
+      jumlahKeluar: 1,
+      jumlahAir: 0,
+      jumlahGalon: 0,
+      jumlahKardus: 0,
+      bayar: 0,
+      uang: 0,
+    };
+  },
+  computed: {
+    ...vuex.mapGetters({
+      user: "auth/user",
+      distributors: "distributor/distributors",
+      supliers: "suplier/supliers",
+      asets: "aset/asets",
+    }),
+    payer() {
+      return this.distributors.find(
+        (distributor) => distributor.id == this.payer_id
+      );
+    },
+    utang() {
+      if (this.payer.utang && this.payer.utang.length != 0) {
+        return "-" + this.payer.utang[0].jumlah + " Galon";
+      }
+      if (this.payer.piutang && this.payer.piutang.length != 0) {
+        return "+" + this.payer.piutang[0].jumlah + " Galon";
+      }
+    },
+    totalAir() {
+      return this.jumlahAir * this.asets[0].harga_jual;
+    },
+    totalGalon() {
+      return this.jumlahGalon * this.asets[1].harga_jual;
+    },
+    totalKardus() {
+      return this.jumlahKardus * this.asets[2].harga_jual;
+    },
+    jumlah() {
+      let total = this.totalAir + this.totalGalon + this.totalKardus;
+      this.bayar = total;
+      this.uang = total;
+      return total;
+    },
+    kembali() {
+      return this.uang - this.bayar;
+    },
+    sisaGalon() {
+      if (this.payer.utang && this.payer.utang.length != 0) {
+        return (
+          +this.payer.utang[0].jumlah + this.jumlahMasuk - this.jumlahKeluar
+        );
+      }
+      if (this.payer.piutang && this.payer.piutang.length != 0) {
+        return (
+          -this.payer.piutang[0].jumlah + this.jumlahMasuk - this.jumlahKeluar
+        );
+      }
+    },
+  },
+  components: {},
+  methods: {
+    showItemData(index) {
+      this.$set(this.showItem, index, !this.showItem[index]);
+      if (index == 0 && this.showItem[index] == false) {
+        this.jumlahAir = 0;
+      } else if (index == 1 && this.showItem[index] == false) {
+        this.jumlahGalon = 0;
+      } else if (index == 2 && this.showItem[index] == false) {
+        this.jumlahKardus = 0;
+      }
+    },
+  },
+  watch: {
+    jumlahAir: function (newJumlah) {
+      this.jumlahMasuk = newJumlah;
+      this.jumlahKeluar = newJumlah;
+    },
+  },
+  created() {
+    this.$store.dispatch("distributor/fetchDistributors");
+    this.$store.dispatch("suplier/fetchSupliers");
+    this.$store.dispatch("aset/fetchAsets");
+    this.loading = false;
+  },
+
+  metaInfo() {
+    return { title: "Dashboard" };
+  },
+};
+</script>
 
 <style scoped>
 .transaksi {
@@ -207,65 +532,3 @@ h4 {
   padding: 0.25em 0.6em 0.25em 0.6em;
 }
 </style>
-
-<script>
-// import axios from 'axios'
-// {
-//     "payer_type": "Distributor",
-//     "payer_id": "1",
-//     "transaksis": [
-//         {
-//             "jumlah": 12,
-//             "keterangan": "test",
-//             "tipe": "Aset",
-//             "id": 2,
-//             "kode": "debit"
-//         },
-//         {
-//             "aset_id":2,
-//             "jumlah": 12,
-//             "kode": "kredit",
-//             "keterangan": "test",
-//             "tipe": "Utang"
-//         }
-//     ]
-// }
-import * as vuex from "vuex";
-export default {
-  middleware: "auth",
-  computed: vuex.mapGetters({
-    user: "auth/user",
-  }),
-  components: {},
-  computed: {
-    ...vuex.mapGetters({
-      asets: "aset/asets",
-    }),
-    items: function () {
-      if (!this.loading && this.asets) {
-        return this.asets.map(
-          ({ id, nama, harga_jual, harga_beli, jumlah }) => {
-            return { id, nama, harga_jual, harga_beli, jumlah };
-          }
-        );
-      }
-    },
-    itemsTitle: function () {
-      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah"];
-    },
-  },
-  methods: {
-    addProduk($id) {
-      console.log($id);
-    },
-  },
-  created() {
-    this.$store.dispatch("aset/fetchAsets");
-    this.loading = false;
-  },
-
-  metaInfo() {
-    return { title: "Dashboard" };
-  },
-};
-</script>

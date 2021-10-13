@@ -4,7 +4,7 @@ import store from '~/store'
 // state
 export const state = {
 
-  asets: [],
+  asets: [{"jumlah":0},{"jumlah":0},{"jumlah":0}],
 }
 
 // getters

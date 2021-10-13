@@ -9,9 +9,11 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Galon\AsetController;
 use App\Http\Controllers\Galon\DetailTransaksiController;
+use App\Http\Controllers\Galon\DistributorController;
 use App\Http\Controllers\Galon\LogController;
 use App\Http\Controllers\Galon\PiutangController;
 use App\Http\Controllers\Galon\SaldoController;
+use App\Http\Controllers\Galon\SuplierController;
 use App\Http\Controllers\Galon\TransaksiController;
 use App\Http\Controllers\Galon\UtangController;
 use App\Http\Controllers\Settings\PasswordController;
@@ -38,10 +40,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
     Route::apiResource('aset', AsetController::class);
-    Route::apiResource('transaksi', TransaksiController::class);
+    Route::apiResource('distributor', DistributorController::class);
     Route::apiResource('detailTransaksi', DetailTransaksiController::class);
+    Route::apiResource('transaksi', TransaksiController::class);
     Route::apiResource('saldo', SaldoController::class);
     Route::apiResource('utang', UtangController::class);
+    Route::apiResource('suplier', SuplierController::class);
     Route::apiResource('piutang', PiutangController::class);
     Route::apiResource('log', LogController::class);
 
