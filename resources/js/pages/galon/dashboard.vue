@@ -1,5 +1,5 @@
 <template>
-  <div class="row mb-5">
+  <div class="row mb-5 mx-md-4">
     <div class="col transaksi">
       <div class="judul"><h4>Transaksi</h4></div>
 
@@ -19,7 +19,7 @@
               <div>Air Galon</div>
               <div class="text-center">33x</div>
             </div>
-            <div class="d-flex">
+            <div class="d-flex mt-2">
               <div class="input-group input-in-out input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"
                   >Masuk</span
@@ -43,7 +43,25 @@
                 />
               </div>
             </div>
-            <div class="d-flex sepertiga">
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 49.2%"
+            >
+              <button class="btn btn-exsm btn-secondary">+5</button>
+              <button class="btn btn-exsm btn-secondary">+1</button>
+              <button class="btn btn-exsm btn-secondary">-1</button>
+              <button class="btn btn-exsm btn-secondary">-5</button>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 49.2%"
+            >
+              <button class="btn btn-exsm btn-secondary">+5</button>
+              <button class="btn btn-exsm btn-secondary">+1</button>
+              <button class="btn btn-exsm btn-secondary">-1</button>
+              <button class="btn btn-exsm btn-secondary">-5</button>
+            </div>
+            <div class="d-flex sepertiga mt-3">
               <div class="input-group input-in-out input-group-sm mb-3">
                 <span class="input-group-text" id="inputGroup-sizing-sm"
                   >jumlah</span
@@ -55,8 +73,19 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">  x Rp 10 000</div>
+              <div class="text-center">x Rp 10 000</div>
               <div class="text-end">Rp 20 000</div>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 100%"
+            >
+              <button class="btn btn-exsm btn-secondary">+10</button>
+              <button class="btn btn-exsm btn-secondary">+5</button>
+              <button class="btn btn-exsm btn-secondary">+1</button>
+              <button class="btn btn-exsm btn-secondary">-1</button>
+              <button class="btn btn-exsm btn-secondary">-5</button>
+              <button class="btn btn-exsm btn-secondary">-10</button>
             </div>
           </div>
           <div class="item border border-primary p-2">
@@ -76,8 +105,19 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">  x Rp 35 000</div>
+              <div class="text-center">x Rp 35 000</div>
               <div class="text-end">Rp 35 000</div>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 100%"
+            >
+              <button class="btn btn-exsm btn-secondary">+10</button>
+              <button class="btn btn-exsm btn-secondary">+5</button>
+              <button class="btn btn-exsm btn-secondary">+1</button>
+              <button class="btn btn-exsm btn-secondary">-1</button>
+              <button class="btn btn-exsm btn-secondary">-5</button>
+              <button class="btn btn-exsm btn-secondary">-10</button>
             </div>
           </div>
           <div class="item border border-primary p-2">
@@ -97,8 +137,19 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">  x Rp 30 000</div>
+              <div class="text-center">x Rp 30 000</div>
               <div class="text-end">Rp 30 000</div>
+            </div>
+            <div
+              class="d-inline-flex justify-content-evenly"
+              style="width: 100%"
+            >
+              <button class="btn btn-exsm btn-secondary">+10</button>
+              <button class="btn btn-exsm btn-secondary">+5</button>
+              <button class="btn btn-exsm btn-secondary">+1</button>
+              <button class="btn btn-exsm btn-secondary">-1</button>
+              <button class="btn btn-exsm btn-secondary">-5</button>
+              <button class="btn btn-exsm btn-secondary">-10</button>
             </div>
           </div>
           <div class="item border border-primary p-2">
@@ -119,7 +170,7 @@
               <div>Rp 25 000</div>
             </div>
           </div>
-            <button class="btn btn-primary btn-sm me-auto">Submit</button>
+          <button class="btn btn-primary btn-sm mt-1">Submit</button>
         </div>
       </div>
     </div>
@@ -149,6 +200,11 @@ h4 {
 
 .input-in-out {
   height: 20px;
+}
+
+.btn-exsm {
+  font-size: 0.7rem;
+  padding: 0.25em 0.6em 0.25em 0.6em;
 }
 </style>
 

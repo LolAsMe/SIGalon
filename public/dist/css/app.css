@@ -18955,6 +18955,10 @@ h4[data-v-61c0fcdd] {
 .input-in-out[data-v-61c0fcdd] {
   height: 20px;
 }
+.btn-exsm[data-v-61c0fcdd] {
+  font-size: 0.7rem;
+  padding: 0.25em 0.6em 0.25em 0.6em;
+}
 
 
 .settings-card .card-body {
