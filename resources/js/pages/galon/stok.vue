@@ -606,7 +606,6 @@ export default {
         this.bayar = 0;
         this.uang = 0;
 
-        this.$store.dispatch("suplier/fetchsupliers");
         this.$store.dispatch("suplier/fetchSupliers");
         this.$store.dispatch("aset/fetchAsets");
       } catch (error) {
