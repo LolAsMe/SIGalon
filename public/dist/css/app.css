@@ -18961,6 +18961,31 @@ h4[data-v-61c0fcdd] {
 }
 
 
+.transaksi[data-v-07e29fc4] {
+  margin-top: 0.3em;
+}
+.judul[data-v-07e29fc4] {
+  margin-top: 0.5em;
+  text-align: center;
+}
+.sepertiga > div[data-v-07e29fc4] {
+  width: 33.33333333%;
+}
+h4[data-v-07e29fc4] {
+  font-weight: bold;
+}
+.item[data-v-07e29fc4] {
+  margin-top: 0.4em;
+}
+.input-in-out[data-v-07e29fc4] {
+  height: 20px;
+}
+.btn-exsm[data-v-07e29fc4] {
+  font-size: 0.7rem;
+  padding: 0.25em 0.6em 0.25em 0.6em;
+}
+
+
 .settings-card .card-body {
   padding: 0;
 }

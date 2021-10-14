@@ -14,6 +14,7 @@ export default [
 
   { path: '/home', name: 'home', component: page('home.vue') },
   { path: '/dashboard', name: 'dashboard', component: page('galon/dashboard.vue') },
+  { path: '/stok', name: 'stok', component: page('galon/stok.vue') },
   { path: '/aset', name: 'aset', component: page('galon/aset.vue') },
   { path: '/detail/transaksi', name: 'detail.transaksi', component: page('galon/detail_transaksi.vue') },
   { path: '/log', name: 'log', component: page('galon/log.vue') },

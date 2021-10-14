@@ -2,9 +2,10 @@ import axios from 'axios'
 import store from '~/store'
 
 // state
+
 export const state = {
 
-  supliers: [],
+  supliers: [{"id":"1","nama":"dummy"}],
 }
 
 // getters

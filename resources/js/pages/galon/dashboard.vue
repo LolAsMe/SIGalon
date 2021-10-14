@@ -2,17 +2,9 @@
   <div class="row mb-5 mx-md-4">
     <div class="col transaksi">
       <div class="judul">
-        <h4>
-          Transaksi <span class="text-primary">{{ tipe }}</span>
-        </h4>
+        <h4>Transaksi <span class="text-primary">Penjualan</span></h4>
       </div>
-      <div class="d-flex">
-        <a class="btn btn-primary btn-sm me-1" @click="tipe = 'Penjualan'">
-          Penjualan
-        </a>
-        <a class="btn btn-primary btn-sm me-auto" @click="tipe = 'Pembelian'">
-          Pembelian
-        </a>
+      <div class="d-flex flex-row-reverse">
         <a class="btn btn-primary btn-sm" @click="showPayer = !showPayer">{{
           payer.nama
         }}</a>
@@ -430,9 +422,6 @@ export default {
       jumlahKardus: 0,
       bayar: 0,
       uang: 0,
-      tipe: "Penjualan",
-      masuk: "debit",
-      keluar:"kredit"
     };
   },
   computed: {
@@ -636,6 +625,9 @@ export default {
         this.jumlahKardus = 0;
         this.bayar = 0;
         this.uang = 0;
+        this.$store.dispatch("distributor/fetchDistributors");
+        this.$store.dispatch("suplier/fetchSupliers");
+        this.$store.dispatch("aset/fetchAsets");
       } catch (error) {
         console.log(error);
       }
@@ -650,7 +642,6 @@ export default {
   },
   created() {
     this.$store.dispatch("distributor/fetchDistributors");
-    this.$store.dispatch("suplier/fetchSupliers");
     this.$store.dispatch("aset/fetchAsets");
     this.loading = false;
   },
