@@ -59,6 +59,5 @@ class GalonService
         }
         $transaksi->status = 'Ok';
         $transaksi->save();
-        dd('berhasil');
     }
 }

@@ -1,8 +1,18 @@
 <template>
   <div class="row mb-5 mx-md-4">
     <div class="col transaksi">
-      <div class="judul"><h4>Transaksi</h4></div>
-      <div class="d-flex flex-row-reverse">
+      <div class="judul">
+        <h4>
+          Transaksi <span class="text-primary">{{ tipe }}</span>
+        </h4>
+      </div>
+      <div class="d-flex">
+        <a class="btn btn-primary btn-sm me-1" @click="tipe = 'Penjualan'">
+          Penjualan
+        </a>
+        <a class="btn btn-primary btn-sm me-auto" @click="tipe = 'Pembelian'">
+          Pembelian
+        </a>
         <a class="btn btn-primary btn-sm" @click="showPayer = !showPayer">{{
           payer.nama
         }}</a>
@@ -393,7 +403,9 @@
             </div>
             <div>Keterangan : {{ sisaGalon }} Galon</div>
           </div>
-          <button class="btn btn-primary btn-sm mt-1">Submit</button>
+          <button class="btn btn-primary btn-sm mt-1" @click="submitTransaksi">
+            Submit
+          </button>
         </div>
       </div>
     </div>
@@ -401,6 +413,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import * as vuex from "vuex";
 export default {
   middleware: "auth",
@@ -410,13 +423,16 @@ export default {
       showPayer: false,
       showItem: [true, false, false],
       payer_id: 1,
-      jumlahMasuk: 1,
-      jumlahKeluar: 1,
+      jumlahMasuk: 0,
+      jumlahKeluar: 0,
       jumlahAir: 0,
       jumlahGalon: 0,
       jumlahKardus: 0,
       bayar: 0,
       uang: 0,
+      tipe: "Penjualan",
+      masuk: "debit",
+      keluar:"kredit"
     };
   },
   computed: {
@@ -469,6 +485,123 @@ export default {
         );
       }
     },
+    laba() {
+      let dataLaba = 0;
+      let labaAir =
+        (this.asets[0].harga_jual - this.asets[0].harga_beli) * this.jumlahAir;
+      let labaGalon =
+        (this.asets[1].harga_jual - this.asets[1].harga_beli) *
+        this.jumlahGalon;
+      let labaKardus =
+        (this.asets[2].harga_jual - this.asets[2].harga_beli) *
+        this.jumlahKardus;
+      dataLaba += labaAir;
+      dataLaba += labaGalon;
+      dataLaba += labaKardus;
+      return {
+        kredit: dataLaba,
+        keterangan: "test",
+        tipe: "Laba",
+      };
+    },
+    transaksiItem() {
+      let dataTransaksi = [];
+      if (this.jumlahAir > 0) {
+        let data = [
+          {
+            debit: this.jumlahAir * this.asets[0].harga_jual,
+            jumlah: this.jumlahAir,
+            harga: this.asets[0].harga_jual,
+            keterangan: "test",
+            tipe: "Saldo",
+          },
+          {
+            jumlah: this.jumlahAir,
+            keterangan: "test",
+            tipe: "Aset",
+            id: this.asets[0].id,
+            kode: "kredit",
+          },
+        ];
+        dataTransaksi.push(...data);
+      }
+      if (this.jumlahGalon > 0) {
+        let data = [
+          {
+            debit: this.jumlahGalon * this.asets[1].harga_jual,
+            jumlah: this.jumlahGalon,
+            harga: this.asets[1].harga_jual,
+            keterangan: "test",
+            tipe: "Saldo",
+          },
+          {
+            jumlah: this.jumlahGalon,
+            keterangan: "test",
+            tipe: "Aset",
+            id: this.asets[1].id,
+            kode: "kredit",
+          },
+        ];
+        dataTransaksi.push(...data);
+      }
+      if (this.jumlahKardus > 0) {
+        let data = [
+          {
+            debit: this.jumlahKardus * this.asets[2].harga_jual,
+            jumlah: this.jumlahKardus,
+            harga: this.asets[2].harga_jual,
+            keterangan: "test",
+            tipe: "Saldo",
+          },
+          {
+            jumlah: this.jumlahKardus,
+            keterangan: "test",
+            tipe: "Aset",
+            id: this.asets[2].id,
+            kode: "kredit",
+          },
+        ];
+        dataTransaksi.push(...data);
+      }
+      return dataTransaksi;
+    },
+    transaksiUtang() {
+      let dataUtang = [];
+      let kodeUtang;
+      let kodeAset;
+      let jumlahUtang;
+      if (this.jumlahMasuk != this.jumlahKeluar) {
+        if (this.jumlahMasuk > this.jumlahKeluar) {
+          kodeUtang = "kredit";
+          kodeAset = "debit";
+          jumlahUtang = this.jumlahMasuk - this.jumlahKeluar;
+        }
+        if (this.jumlahMasuk < this.jumlahKeluar) {
+          kodeUtang = "debit";
+          kodeAset = "kredit";
+          jumlahUtang = this.jumlahKeluar - this.jumlahMasuk;
+        }
+        let data = [
+          {
+            jumlah: jumlahUtang,
+            keterangan: "test",
+            tipe: "Aset",
+            id: 2,
+            kode: kodeUtang,
+            jenis: "utang",
+          },
+          {
+            aset_id: 2,
+            jumlah: jumlahUtang,
+            kode: kodeAset,
+            keterangan: "test",
+            tipe: "Utang",
+          },
+        ];
+        dataUtang.push(...data);
+      }
+      return dataUtang;
+    },
   },
   components: {},
   methods: {
@@ -482,7 +615,33 @@ export default {
         this.jumlahKardus = 0;
       }
     },
+    async submitTransaksi() {
+      try {
+        let data = [];
+        data = {
+          payer_type: "Distributor",
+          payer_id: "1",
+          transaksis: [
+            this.laba,
+            ...this.transaksiItem,
+            ...this.transaksiUtang,
+          ],
+        };
+        const responseAxios = await axios.post("/api/transaksi", data);
+
+        this.jumlahMasuk = 0;
+        this.jumlahKeluar = 0;
+        this.jumlahAir = 0;
+        this.jumlahGalon = 0;
+        this.jumlahKardus = 0;
+        this.bayar = 0;
+        this.uang = 0;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
+
   watch: {
     jumlahAir: function (newJumlah) {
       this.jumlahMasuk = newJumlah;

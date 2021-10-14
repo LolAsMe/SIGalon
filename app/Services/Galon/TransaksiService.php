@@ -43,7 +43,6 @@ class GalonService
 
         $transaksi = Transaksi::create(['total' => $attribute['total']]);
         $detail = $transaksi->detail()->create($attribute);
-        dd($detail);
     }
 
     public function filterTransaksiAttribute(array $attribute)

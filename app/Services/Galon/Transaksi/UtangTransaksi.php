@@ -143,4 +143,17 @@ class UtangTransaksi extends AbstractTransaksi
             $this->createTargetTransaksiLog();
         }
     }
+
+    public function updateTransaksi()
+    {
+        // $this->transaksi->debit += $this->attribute['debit'] ?? 0;
+        // $this->transaksi->kredit += $this->attribute['kredit'] ?? 0;
+        // if($this->attribute['kredit']>$this->attribute['debit']){
+        //     $this->attribute['total'] = $this->transaksi->kredit;
+        // }else{
+        //     $this->attribute['total'] = $this->transaksi->debit;
+        // }
+        $this->attribute['total'] = 0;
+        $this->transaksi->save();
+    }
 }

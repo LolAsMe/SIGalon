@@ -27,8 +27,8 @@ class AsetSeeder extends Seeder
         DB::table('aset')->insert([
             'id'=>2,
             'nama'=>'Galon',
-            'harga_jual'=>40000,
-            'harga_beli'=>38000,
+            'harga_jual'=>35000,
+            'harga_beli'=>35000,
             'jumlah'=>50,
             'created_at'=>now(),
             'updated_at'=>now()

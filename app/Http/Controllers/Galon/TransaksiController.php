@@ -37,6 +37,7 @@ class TransaksiController extends Controller
         //
          $transaksi = json_decode($request->getContent(),true);
         $this->galonService->transact($transaksi);
+        return response('sukses');
     }
 
     /**
