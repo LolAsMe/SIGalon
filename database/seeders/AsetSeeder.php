@@ -20,7 +20,7 @@ class AsetSeeder extends Seeder
             'nama'=>'Isi Galon',
             'harga_jual'=>10000,
             'harga_beli'=>8000,
-            'jumlah'=>50,
+            'jumlah'=>47,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -29,7 +29,7 @@ class AsetSeeder extends Seeder
             'nama'=>'Galon',
             'harga_jual'=>35000,
             'harga_beli'=>35000,
-            'jumlah'=>50,
+            'jumlah'=>77,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);
@@ -38,7 +38,7 @@ class AsetSeeder extends Seeder
             'nama'=>'Kardus',
             'harga_jual'=>30000,
             'harga_beli'=>27500,
-            'jumlah'=>20,
+            'jumlah'=>23,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

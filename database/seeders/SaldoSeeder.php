@@ -17,7 +17,7 @@ class SaldoSeeder extends Seeder
         //
         DB::table('saldo')->insert([
             'nama'=>'Utama',
-            'total'=>1000000,
+            'total'=>675000,
             'created_at'=>now(),
             'updated_at'=>now()
         ]);

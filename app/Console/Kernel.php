@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\DatabaseBackUp;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -25,6 +26,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('database:backup')->everyMinute();;
+        $schedule->call(function () {
+            $filename = "backup-" . now()->format('d-M-Y-H-i-s') . ".sql";
+
+            $command = "mysqldump --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . storage_path() . "/app/backup/" . $filename;
+
+            $returnVar = NULL;
+            $output  = NULL;
+
+            exec($command, $output, $returnVar);
+        })->when(true);
     }
 
     /**
@@ -34,7 +46,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

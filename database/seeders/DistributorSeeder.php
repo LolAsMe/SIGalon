@@ -45,5 +45,10 @@ class DistributorSeeder extends Seeder
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
+        DB::table('distributor')->insert([
+            'nama'=>'Home',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ]);
     }
 }
