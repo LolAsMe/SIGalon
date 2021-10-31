@@ -576,13 +576,13 @@ export default {
             keterangan: "test",
             tipe: "Aset",
             id: 2,
-            kode: kodeUtang,
+            kode: kodeAset,
             jenis: "utang",
           },
           {
             aset_id: 2,
             jumlah: jumlahUtang,
-            kode: kodeAset,
+            kode: kodeUtang,
             keterangan: "test",
             tipe: "Utang",
           },
@@ -609,7 +609,7 @@ export default {
         let data = [];
         data = {
           payer_type: "Distributor",
-          payer_id: "1",
+          payer_id: this.payer_id,
           transaksis: [
             this.laba,
             ...this.transaksiItem,

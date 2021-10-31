@@ -33,15 +33,15 @@ class UtangTransaksi extends AbstractTransaksi
             dd('error');
         } else {
             if ($this->attribute['tipe'] == 'Utang') {
-                if ($this->attribute['kode'] == "debit") {
+                if ($this->attribute['kode'] == "kredit") {
                     $this->createUtang();
-                } else if ($this->attribute['kode'] == "kredit") {
+                } else if ($this->attribute['kode'] == "debit") {
                     $this->createPiutang();
                 }
             } else if ($this->attribute['tipe'] == 'Piutang') {
-                if ($this->attribute['kode'] == "debit") {
+                if ($this->attribute['kode'] == "kredit") {
                     $this->createPiutang();
-                } else if ($this->attribute['kode'] == "kredit") {
+                } else if ($this->attribute['kode'] == "debit") {
                     $this->createUtang();
                 }
             }
@@ -82,22 +82,22 @@ class UtangTransaksi extends AbstractTransaksi
     {
         $jumlah = $this->attribute['jumlah'];
         if (class_basename($this->targetTransaksi) == $this->attribute['tipe']) {
-            if ($this->attribute['kode'] == "kredit") {
-                $jumlah = -$this->attribute['jumlah'];
-                $this->attribute['kredit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
-            } else {
-                $this->attribute['debit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
-            }
-        } else if (class_basename($this->targetTransaksi) != $this->attribute['tipe']) {
             if ($this->attribute['kode'] == "debit") {
                 $jumlah = -$this->attribute['jumlah'];
                 $this->attribute['debit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
             } else {
-
                 $this->attribute['kredit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
             }
+        } else if (class_basename($this->targetTransaksi) != $this->attribute['tipe']) {
+            if ($this->attribute['kode'] == "kredit") {
+                $jumlah = -$this->attribute['jumlah'];
+                $this->attribute['kredit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
+            } else {
+
+                $this->attribute['debit'] = $this->attribute['jumlah'] * $this->attribute['harga'];
+            }
         }
-        $this->attribute['total'] = $this->attribute['debit'] - $this->attribute['kredit'];
+        $this->attribute['total'] = $this->attribute['kredit'] - $this->attribute['debit'];
         $this->targetTransaksi->jumlah += $jumlah;
 
 
@@ -146,12 +146,12 @@ class UtangTransaksi extends AbstractTransaksi
 
     public function updateTransaksi()
     {
-        // $this->transaksi->debit += $this->attribute['debit'] ?? 0;
         // $this->transaksi->kredit += $this->attribute['kredit'] ?? 0;
-        // if($this->attribute['kredit']>$this->attribute['debit']){
-        //     $this->attribute['total'] = $this->transaksi->kredit;
-        // }else{
+        // $this->transaksi->debit += $this->attribute['debit'] ?? 0;
+        // if($this->attribute['debit']>$this->attribute['kredit']){
         //     $this->attribute['total'] = $this->transaksi->debit;
+        // }else{
+        //     $this->attribute['total'] = $this->transaksi->kredit;
         // }
         $this->attribute['total'] = 0;
         $this->transaksi->save();
