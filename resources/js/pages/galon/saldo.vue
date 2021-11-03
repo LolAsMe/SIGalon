@@ -107,6 +107,7 @@ export default {
       if (!this.loading && this.saldos) {
         return this.saldos.map(
           ({ id, nama, total }) => {
+            total = this.toCurrency(total);
             return { id, nama, total };
           }
         );

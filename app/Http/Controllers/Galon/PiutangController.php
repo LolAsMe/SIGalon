@@ -16,7 +16,7 @@ class PiutangController extends Controller
     public function index()
     {
         //
-        $piutangs = Piutang::all();
+        $piutangs = Piutang::with(['payer','aset'])->get();
         return response()->json($piutangs);
     }
 

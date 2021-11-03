@@ -51,6 +51,15 @@
         </li>
         <li>
           <router-link
+            :to="{ name: 'stok' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-speedometer2"></i>
+            <span class="ms-1 d-none d-md-inline">Stok</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link
             :to="{ name: 'aset' }"
             class="nav-link px-0 align-middle"
           >
@@ -93,16 +102,6 @@
             <span class="ms-1 d-none d-md-inline">Piutang</span></router-link
           >
         </li>
-
-        <li>
-          <router-link
-            :to="{ name: 'transaksi' }"
-            class="nav-link px-0 align-middle"
-          >
-            <i class="fs-4 bi-bootstrap"></i>
-            <span class="ms-1 d-none d-md-inline">Transaksi</span></router-link
-          >
-        </li>
         <li>
           <router-link
             :to="{ name: 'utang' }"
@@ -110,6 +109,15 @@
           >
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-md-inline">Utang</span></router-link
+          >
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'transaksi' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-md-inline">Transaksi</span></router-link
           >
         </li>
 

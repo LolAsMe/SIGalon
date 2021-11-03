@@ -108,6 +108,8 @@ export default {
       if (!this.loading && this.asets) {
         return this.asets.map(
           ({ id, nama, harga_jual, harga_beli, jumlah, status }) => {
+            harga_jual = this.toCurrency(harga_jual)
+            harga_beli = this.toCurrency(harga_beli)
             return { id, nama, harga_jual, harga_beli, jumlah, status };
           }
         );

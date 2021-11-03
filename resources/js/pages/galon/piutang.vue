@@ -107,14 +107,18 @@ export default {
     items: function () {
       if (!this.loading && this.piutangs) {
         return this.piutangs.map(
-          ({ id, nama, harga_jual, harga_beli, jumlah, status }) => {
-            return { id, nama, harga_jual, harga_beli, jumlah, status };
+          ({ id, payer,aset,payer_type, harga, jumlah, total,keterangan,status}) => {
+            let nama = payer.nama;
+            let aset_nama = aset.nama;
+            harga = this.toCurrency(harga)
+            total = this.toCurrency(total)
+            return { id, nama,payer_type,aset_nama, harga, jumlah, total,keterangan ,status};
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah", "Status"];
+      return ["ID", "Nama", "Tipe","Aset", "Harga", "Jumlah","total", "Status","Keterangan"];
     },
   },
   data() {

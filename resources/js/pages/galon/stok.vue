@@ -153,8 +153,8 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp {{ asets[0].harga_beli }}</div>
-              <div class="text-end">Rp {{ totalAir }}</div>
+              <div class="text-center">x {{ toCurrency(asets[0].harga_beli) }}</div>
+              <div class="text-end">{{ toCurrency(totalAir) }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
@@ -216,8 +216,8 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp {{ asets[1].harga_beli }}</div>
-              <div class="text-end">Rp {{ totalGalon }}</div>
+              <div class="text-center">x {{ toCurrency(asets[1].harga_beli) }}</div>
+              <div class="text-end">{{ toCurrency(totalGalon) }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
@@ -279,8 +279,8 @@
                   aria-describedby="inputGroup-sizing-sm"
                 />
               </div>
-              <div class="text-center">x Rp {{ asets[2].harga_beli }}</div>
-              <div class="text-end">Rp {{ totalKardus }}</div>
+              <div class="text-center">x {{ toCurrency(asets[2].harga_beli) }}</div>
+              <div class="text-end">{{ toCurrency(totalKardus) }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
@@ -327,11 +327,11 @@
           <div class="item border border-primary p-2">
             <div class="d-flex pt-1">
               <div class="me-auto">Jumlah</div>
-              <div>Rp {{ jumlah }}</div>
+              <div>{{ toCurrency(jumlah) }}</div>
             </div>
             <div class="d-flex pt-1">
               <div class="me-auto">Bayar</div>
-              <div>Rp {{ bayar }}</div>
+              <div>{{ toCurrency(bayar) }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
@@ -364,7 +364,7 @@
             </div>
             <div class="d-flex pt-1">
               <div class="me-auto">Uang</div>
-              <div>Rp {{ uang }}</div>
+              <div>{{ toCurrency(uang) }}</div>
             </div>
             <div
               class="d-inline-flex justify-content-evenly"
@@ -391,7 +391,7 @@
             </div>
             <div class="d-flex pt-1">
               <div class="me-auto">Kembali</div>
-              <div>Rp {{ kembali }}</div>
+              <div>{{ toCurrency(kembali) }}</div>
             </div>
             <div>Keterangan : {{ sisaGalon }} Galon</div>
           </div>
@@ -557,13 +557,13 @@ export default {
             keterangan: "test",
             tipe: "Aset",
             id: 2,
-            kode: kodeUtang,
+            kode: kodeAset,
             jenis: "utang",
           },
           {
             aset_id: 2,
             jumlah: jumlahUtang,
-            kode: kodeAset,
+            kode: kodeUtang,
             keterangan: "test",
             tipe: "Utang",
           },
@@ -590,7 +590,7 @@ export default {
         let data = [];
         data = {
           payer_type: "suplier",
-          payer_id: "1",
+          payer_id: this.payer_id,
           transaksis: [
             ...this.transaksiItem,
             ...this.transaksiUtang,
