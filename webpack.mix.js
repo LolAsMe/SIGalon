@@ -37,16 +37,16 @@ mix.webpackConfig({
   }
 })
 
-// mix.then(() => {
-//   if (mix.inProduction()) {
-//     process.nextTick(() => publishAseets())
-//   }
-// })
+mix.then(() => {
+  if (mix.inProduction()) {
+    process.nextTick(() => publishAseets())
+  }
+})
 
-// function publishAseets () {
-//   const publicDir = resolve(__dirname, './public')
+function publishAseets () {
+  const publicDir = resolve(__dirname, './public')
 
-//   removeSync(join(publicDir, 'dist'))
-//   copySync(join(publicDir, 'build', 'dist'), join(publicDir, 'dist'))
-//   removeSync(join(publicDir, 'build'))
-// }
+  removeSync(join(publicDir, 'dist'))
+  copySync(join(publicDir, 'build', 'dist'), join(publicDir, 'dist'))
+  removeSync(join(publicDir, 'build'))
+}
