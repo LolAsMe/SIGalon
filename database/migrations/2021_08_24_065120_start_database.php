@@ -100,7 +100,6 @@ class StartDatabase extends Migration
 
         Schema::create('utang', function (Blueprint $table) {
             $table->id();
-            $table->morphs('payer');
             $table->foreignId('aset_id')->nullable();
             $table->string('payer_type')->default('Destributor');
             $table->string('payer_id')->default(7);
