@@ -76,7 +76,7 @@
             <span class="ms-1 d-none d-md-inline">Saldo</span></router-link
           >
         </li>
-        <li>
+        <!-- <li>
           <router-link
             :to="{ name: 'detail.transaksi' }"
             class="nav-link px-0 align-middle"
@@ -86,8 +86,8 @@
               >Detail Transaksi</span
             ></router-link
           >
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <router-link :to="{ name: 'log' }" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-md-inline">Log</span></router-link
@@ -101,7 +101,7 @@
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-md-inline">Piutang</span></router-link
           >
-        </li>
+        </li> -->
         <li>
           <router-link
             :to="{ name: 'utang' }"
@@ -109,6 +109,15 @@
           >
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-md-inline">Utang</span></router-link
+          >
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'piutang' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-md-inline">Piutang</span></router-link
           >
         </li>
         <li>

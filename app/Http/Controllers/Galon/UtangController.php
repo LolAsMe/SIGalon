@@ -16,7 +16,9 @@ class UtangController extends Controller
     public function index()
     {
         //
-        $utangs = Utang::with(['payer','aset'])->get();
+        $utangs = Utang::with(['payer','aset','log'=>function($query){
+            $query->latest('id')->take(10);
+        }])->get();
         return response()->json($utangs);
     }
 

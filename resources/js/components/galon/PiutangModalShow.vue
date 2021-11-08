@@ -1,37 +1,68 @@
 <template>
-  <basic-modal v-if="showModal" @close="showModal=false">
-    <h5 slot="header">Piutang</h5>
+  <div v-if="showModal" @close="showModal = false">
+    <h5 slot="header">Log Piutang</h5>
     <div slot="body">
-      {{ item }}
+      <v-table :items="items" :itemsTitle="itemsTitle"> </v-table>
     </div>
-    <template v-slot:footer>
-      <button @click="showModal=false" class="btn btn-secondary btn-sm">
-        Close
-      </button>
-    </template>
-  </basic-modal>
+  </div>
 </template>
 
 <script>
-import Modal from "~/components/Modal";
-import BasicModal from "~/components/galon/BasicModal";
 
+import VTable from "~/components/VTable";
 export default {
   name: "PiutangModalShow",
   props: {
     // item: { type: Object, default: null },
   },
   components: {
-    Modal,
-    BasicModal,
+    VTable
+  },
+  computed: {
+    piutang: function () {
+      let currAset = this.$store.getters["piutang/piutangs"].find(
+        (piutang) => piutang.id === this.piutangId
+      );
+      return currAset;
+    },
+    items: function () {
+      if (this.piutang.log) {
+        this.piutang.log.reverse();
+        return this.piutang.log.map(
+          ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
+            return {
+              id,
+              nama,
+              tanggal,
+              jumlah,
+              debit,
+              kredit,
+              total,
+              keterangan,
+            };
+          }
+        );
+      }
+    },
+    itemsTitle: function () {
+      return [
+        "ID",
+        "Nama",
+        "Tanggal",
+        "Jumlah",
+        "Debit",
+        "Kredit",
+        "Total",
+        "Keterangan",
+      ];
+    },
   },
   data() {
     return {
-      showModal:false,
-      item: []
+      showModal: false,
+      piutangId: 0,
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

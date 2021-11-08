@@ -40,7 +40,7 @@
                     class="dropdown-item"
                     @click="
                       ($refs.piutangModal.showModal = true),
-                        ($refs.piutangModal.item = action)
+                        ($refs.piutangModal.piutangId = action.data.id)
                     "
                   >
                     Lihat
