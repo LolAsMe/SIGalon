@@ -23,6 +23,7 @@ export default [
   { path: '/transaksi', name: 'transaksi', component: page('galon/transaksi.vue') },
   { path: '/utang', name: 'utang', component: page('galon/utang.vue') },
   { path: '/user', name: 'user', component: page('galon/user.vue') },
+  { path: '/laba', name: 'laba', component: page('galon/laba.vue') },
 
   { path: '/test', name: 'test', component: page('test.vue') },
   {

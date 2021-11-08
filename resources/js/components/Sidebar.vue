@@ -129,6 +129,15 @@
             <span class="ms-1 d-none d-md-inline">Transaksi</span></router-link
           >
         </li>
+        <li>
+          <router-link
+            :to="{ name: 'laba' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-md-inline">Laba</span></router-link
+          >
+        </li>
 
         <li>
           <router-link

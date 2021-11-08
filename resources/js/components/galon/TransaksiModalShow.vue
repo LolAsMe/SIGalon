@@ -1,37 +1,66 @@
 <template>
-  <basic-modal v-if="showModal" @close="showModal=false">
-    <h5 slot="header">Transaksi</h5>
+  <div v-if="showModal" @close="showModal = false">
+    <h5 slot="header">Log Transaksi</h5>
     <div slot="body">
-      {{ item }}
+      <v-table :items="items" :itemsTitle="itemsTitle"> </v-table>
     </div>
-    <template v-slot:footer>
-      <button @click="showModal=false" class="btn btn-secondary btn-sm">
-        Close
-      </button>
-    </template>
-  </basic-modal>
+  </div>
 </template>
 
 <script>
-import Modal from "~/components/Modal";
-import BasicModal from "~/components/galon/BasicModal";
 
+import VTable from "~/components/VTable";
 export default {
   name: "TransaksiModalShow",
   props: {
     // item: { type: Object, default: null },
   },
   components: {
-    Modal,
-    BasicModal,
+    VTable
+  },
+  computed: {
+    transaksi: function () {
+      let currTransaksi = this.$store.getters["transaksi/transaksis"].find(
+        (transaksi) => transaksi.id === this.transaksiId
+      );
+      return currTransaksi;
+    },
+    items: function () {
+      if (this.transaksi.detail) {
+        return this.transaksi.detail.map(
+          ({ id, jumlah, debit, kredit, total, keterangan,log }) => {
+            let tipe = log.owner_type
+            return {
+              id,
+              tipe,
+              jumlah,
+              debit,
+              kredit,
+              total,
+              keterangan,
+            };
+          }
+        );
+      }
+    },
+    itemsTitle: function () {
+      return [
+        "ID",
+        "Tipe",
+        "Jumlah",
+        "Debit",
+        "Kredit",
+        "Total",
+        "Keterangan",
+      ];
+    },
   },
   data() {
     return {
-      showModal:false,
-      item: []
+      showModal: false,
+      transaksiId: 0,
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

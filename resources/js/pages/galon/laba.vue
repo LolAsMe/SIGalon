@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="d-flex bd-highlight">
-        <div class="p-2 flex-grow-1 bd-highlight"><h2>Saldo</h2></div>
+        <div class="p-2 flex-grow-1 bd-highlight"><h2>Laba</h2></div>
         <div class="p-2 bd-highlight">
           <button
             class="btn btn-primary"
@@ -18,23 +18,23 @@
           >
             Import
           </button>
-          <saldo-modal-add ref="addModal"></saldo-modal-add>
-          <upload-modal :url="'saldo'" ref="uploadModal"></upload-modal>
+          <laba-modal-add ref="addModal"></laba-modal-add>
+          <upload-modal :url="'laba'" ref="uploadModal"></upload-modal>
         </div>
       </div>
     </div>
 
     <div class="col-12 mt-2">
-      <card :title="'Daftar Saldo'">
-        {{ saldos[0].nama }}
-        {{ saldos[0].total }}
+      <card :title="'Daftar Laba'">
+        {{ labas[0].nama }}
+        {{ labas[0].total }}
         <v-table
           :items="items"
           :itemsTitle="itemsTitle"
         >
         </v-table>
-        <saldo-modal-show ref="saldoModal"></saldo-modal-show>
-        <saldo-modal-edit ref="editModal"></saldo-modal-edit>
+        <laba-modal-show ref="labaModal"></laba-modal-show>
+        <laba-modal-edit ref="editModal"></laba-modal-edit>
       </card>
     </div>
   </div>
@@ -42,10 +42,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import SaldoModalAdd from "~/components/galon/SaldoModalAdd";
-import SaldoModalShow from "~/components/galon/SaldoModalShow";
+import LabaModalAdd from "~/components/galon/LabaModalAdd";
+import LabaModalShow from "~/components/galon/LabaModalShow";
 import UploadModal from "~/components/galon/UploadModal";
-import SaldoModalEdit from "~/components/galon/SaldoModalEdit";
+import LabaModalEdit from "~/components/galon/LabaModalEdit";
 import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
@@ -54,20 +54,20 @@ import axios from "axios";
 export default {
   middleware: "auth",
   components: {
-    SaldoModalAdd,
-    SaldoModalShow,
-    SaldoModalEdit,
+    LabaModalAdd,
+    LabaModalShow,
+    LabaModalEdit,
     UploadModal,
     Dropdown,
     VTable,
   },
   computed: {
     ...mapGetters({
-      saldos: "saldo/saldos",
+      labas: "laba/labas",
     }),
     items: function () {
-      if (this.saldos[0].log) {
-        return this.saldos[0].log.map(
+      if (this.labas[0].log) {
+        return this.labas[0].log.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
             return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
           }
@@ -84,17 +84,17 @@ export default {
     };
   },
   methods: {
-    async deleteSaldo(id) {
-      const { data } = await axios.delete("api/saldo/" + id);
-      this.$store.commit("saldo/deleteSaldo", id);
+    async deleteLaba(id) {
+      const { data } = await axios.delete("api/laba/" + id);
+      this.$store.commit("laba/deleteLaba", id);
     },
   },
   created() {
-    this.$store.dispatch("saldo/fetchSaldos");
+    this.$store.dispatch("laba/fetchLabas");
     this.loading = false;
   },
   metaInfo() {
-    return { title: "Saldo" };
+    return { title: "Laba" };
   },
 };
 </script>

@@ -58,4 +58,8 @@ class DetailTransaksi extends \Eloquent
     {
         return $this->belongsTo(Transaksi::class);
     }
+    public function log()
+    {
+        return $this->hasOne(Log::class);
+    }
 }

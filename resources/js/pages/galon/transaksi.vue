@@ -40,7 +40,7 @@
                     class="dropdown-item"
                     @click="
                       ($refs.transaksiModal.showModal = true),
-                        ($refs.transaksiModal.item = action)
+                        ($refs.transaksiModal.transaksiId = action.data.id)
                     "
                   >
                     Lihat
@@ -107,14 +107,15 @@ export default {
     items: function () {
       if (!this.loading && this.transaksis) {
         return this.transaksis.map(
-          ({ id, nama, harga_jual, harga_beli, jumlah, status }) => {
-            return { id, nama, harga_jual, harga_beli, jumlah, status };
+          ({ id, tanggal, debit, kredit, keterangan, status, payer }) => {
+            let payerNama = payer.nama
+            return { id, payerNama, tanggal, debit, kredit, keterangan, status };
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Harga Jual", "Harga Beli", "Jumlah", "Status"];
+      return ["ID", "Nama", "Tangga", "Debit", "Kredit","Keterangan", "Status"];
     },
   },
   data() {

@@ -4,7 +4,7 @@ import store from '~/store'
 // state
 export const state = {
 
-  saldos: [
+  labas: [
     {
         "id": 1,
         "nama": "Loading",
@@ -15,7 +15,7 @@ export const state = {
         "log": [
             {
                 "id": 148,
-                "owner_type": "Saldo",
+                "owner_type": "Laba",
                 "owner_id": 1,
                 "detail_transaksi_id": 152,
                 "nama": "log",
@@ -36,28 +36,28 @@ export const state = {
 
 // getters
 export const getters = {
-  saldos: state => state.saldos,
+  labas: state => state.labas,
 }
 
 // mutations
 export const mutations = {
-  setSaldos: (state, saldos) => (state.saldos = saldos),
-  editSaldo(state, nSaldo) {
-    const oldSaldo = state.saldos.find(saldo => saldo.id === nSaldo.id);
-    if (oldSaldo) {
+  setLabas: (state, labas) => (state.labas = labas),
+  editLaba(state, nLaba) {
+    const oldLaba = state.labas.find(laba => laba.id === nLaba.id);
+    if (oldLaba) {
       // not creating a new object but modifying old object here
-      Object.assign(oldSaldo, nSaldo)
+      Object.assign(oldLaba, nLaba)
     }
   },
-  addSaldo: (state, saldo) => state.saldos.push(saldo),
-  deleteSaldo: (state, id) => state.saldos = state.saldos.filter(saldos => saldos.id !== id)
+  addLaba: (state, laba) => state.labas.push(laba),
+  deleteLaba: (state, id) => state.labas = state.labas.filter(labas => labas.id !== id)
 }
 
 // actions
 export const actions = {
-  async fetchSaldos({ commit }) {
-    const { data } = await axios.get('/api/saldo')
+  async fetchLabas({ commit }) {
+    const { data } = await axios.get('/api/laba')
     data[0].log.reverse()
-    commit('setSaldos', data)
+    commit('setLabas', data)
   },
 }

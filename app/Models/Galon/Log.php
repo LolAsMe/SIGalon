@@ -60,4 +60,9 @@ class Log extends \Eloquent
     {
         return $this->morphTo();
     }
+
+    public function detail()
+    {
+        return $this->belongsTo(DetailTransaksi::class);
+    }
 }

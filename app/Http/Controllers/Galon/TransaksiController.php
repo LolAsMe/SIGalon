@@ -22,7 +22,7 @@ class TransaksiController extends Controller
     public function index()
     {
         //
-        $transaksis = Transaksi::all();
+    $transaksis = Transaksi::with(['payer','detail.log'])->latest('id')->paginate(10);
         return response()->json($transaksis);
     }
 

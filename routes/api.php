@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Galon\AsetController;
 use App\Http\Controllers\Galon\DetailTransaksiController;
 use App\Http\Controllers\Galon\DistributorController;
+use App\Http\Controllers\Galon\LabaController;
 use App\Http\Controllers\Galon\LogController;
 use App\Http\Controllers\Galon\PiutangController;
 use App\Http\Controllers\Galon\SaldoController;
@@ -44,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('detailTransaksi', DetailTransaksiController::class);
     Route::apiResource('transaksi', TransaksiController::class);
     Route::apiResource('saldo', SaldoController::class);
+    Route::apiResource('laba', LabaController::class);
     Route::apiResource('utang', UtangController::class);
     Route::apiResource('suplier', SuplierController::class);
     Route::apiResource('piutang', PiutangController::class);
