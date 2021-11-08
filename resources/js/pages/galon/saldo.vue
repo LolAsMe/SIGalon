@@ -26,50 +26,12 @@
 
     <div class="col-12 mt-2">
       <card :title="'Daftar Saldo'">
+        {{ saldos[0].nama }}
+        {{ saldos[0].total }}
         <v-table
           :items="items"
           :itemsTitle="itemsTitle"
-          :isAction="isRole('Admin')"
         >
-          <template v-slot:action="action">
-            <td>
-              <dropdown name="Action">
-                <li>
-                  <a
-                    type="button"
-                    class="dropdown-item"
-                    @click="
-                      ($refs.saldoModal.showModal = true),
-                        ($refs.saldoModal.item = action)
-                    "
-                  >
-                    Lihat
-                  </a>
-                </li>
-                <li>
-                  <a
-                    type="button"
-                    class="dropdown-item"
-                    @click="
-                      ($refs.editModal.showModal = true),
-                        $refs.editModal.setSaldo(action.data)
-                    "
-                  >
-                    Edit
-                  </a>
-                </li>
-                <li>
-                  <a
-                    type="button"
-                    class="dropdown-item"
-                    @click="deleteSaldo(action.data.id)"
-                  >
-                    Hapus
-                  </a>
-                </li>
-              </dropdown>
-            </td>
-          </template>
         </v-table>
         <saldo-modal-show ref="saldoModal"></saldo-modal-show>
         <saldo-modal-edit ref="editModal"></saldo-modal-edit>
@@ -104,17 +66,17 @@ export default {
       saldos: "saldo/saldos",
     }),
     items: function () {
-      if (!this.loading && this.saldos) {
-        return this.saldos.map(
-          ({ id, nama, total }) => {
-            total = this.toCurrency(total);
-            return { id, nama, total };
+      if (this.saldos[0].log) {
+        this.saldos[0].log.reverse()
+        return this.saldos[0].log.map(
+          ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
+            return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "total"];
+      return ["ID", "Nama", "Tanggal", "Jumlah", "Debit","Kredit","Total", "Keterangan"];
     },
   },
   data() {

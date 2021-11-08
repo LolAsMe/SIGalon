@@ -16,7 +16,9 @@ class SaldoController extends Controller
     public function index()
     {
         //
-        $saldos = Saldo::all();
+        $saldos = Saldo::with(['log'=>function($query){
+            $query->latest('id')->take(7);
+        }])->get();
         return response()->json($saldos);
     }
 
