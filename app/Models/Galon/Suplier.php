@@ -49,6 +49,12 @@ class Suplier extends \Eloquent
     {
         return $this->morphMany(Utang::class, 'payer');
     }
+
+    public function transaksi()
+    {
+        return $this->morphMany(Transaksi::class, 'payer');
+    }
+
     public function piutang()
     {
         return $this->morphMany(Piutang::class, 'payer');

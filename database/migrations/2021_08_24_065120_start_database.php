@@ -102,6 +102,8 @@ class StartDatabase extends Migration
             $table->id();
             $table->morphs('payer');
             $table->foreignId('aset_id')->nullable();
+            $table->string('payer_type')->default('Destributor');
+            $table->string('payer_id')->default(7);
             $table->integer('jumlah')->default(1);
             $table->decimal('harga')->default(0);;
             $table->decimal('total',12)->virtualAs("(`jumlah` * `harga`)");

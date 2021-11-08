@@ -16,7 +16,9 @@ class AsetController extends Controller
     public function index()
     {
         //
-        $asets = Aset::all();
+        $asets = Aset::with(['log'=> function($query){
+            $query->latest()->take(15);
+        }])->get();
         return response()->json($asets);
     }
 

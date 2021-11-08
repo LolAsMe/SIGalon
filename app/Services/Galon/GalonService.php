@@ -44,8 +44,8 @@ class GalonService
     public function transact(array $data)
     {
         Transaksi::whereStatus('Draft')->update(['status' => 'Canceled']);
-        $transaksi = Transaksi::create(['status' => 'Draft']);
-        $transaksi->refresh();
+        $transaksi = Transaksi::create(['status' => 'Draft','payer_id'=>$data['payer_id'],'payer_type'=>$data['payer_type']]);
+        $transaksi->load('payer')->refresh();
         foreach ($data['transaksis'] as $attribute) {
             try {
 

@@ -19,6 +19,7 @@ abstract class AbstractTransaksi
         $this->attribute['kredit'] = $this->attribute['kredit'] ?? 0;
         $this->attribute['jumlah'] = $this->attribute['jumlah'] ?? 1;
         $this->attribute['harga'] = $this->attribute['harga'] ?? 0;
+        $this->attribute['keterangan'] = "Aktor ".$this->transaksi->payer->nama;
     }
 
     abstract public function setTransaksi();

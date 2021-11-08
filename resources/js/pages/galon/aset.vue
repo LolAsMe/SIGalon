@@ -40,7 +40,7 @@
                     class="dropdown-item"
                     @click="
                       ($refs.asetModal.showModal = true),
-                        ($refs.asetModal.item = action)
+                        ($refs.asetModal.asetId = action.data.id)
                     "
                   >
                     Lihat

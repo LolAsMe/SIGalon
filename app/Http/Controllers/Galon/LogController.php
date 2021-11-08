@@ -13,10 +13,17 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $logs = Log::all();
+        if ($request->tipe) {
+            $logs = Log::whereOwnerType($request->tipe)->whereOwnerId($request->id)->get();
+            // return response()->json($request->all());
+        } else {
+            $logs = Log::all();
+            // return response()->json('t');
+        }
+        // $data = json_decode($request->getContent(), true);
         return response()->json($logs);
     }
 
