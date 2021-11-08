@@ -39,6 +39,8 @@ export default {
         return this.aset.log.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
             total = total/this.aset.harga_beli
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
             return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
           }
         );
