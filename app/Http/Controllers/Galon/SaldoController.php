@@ -88,7 +88,7 @@ class SaldoController extends Controller
         if($attribute['total'] > 0){
             $attribute['debit'] = $attribute['total'];
         }else{
-            $attribute['kredit'] = $attribute['total'];
+            $attribute['kredit'] = -$attribute['total'];
         }
         $saldo->increment('total',$request->total);
         $saldo->setLogAttribute($attribute)->createLog();
