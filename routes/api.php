@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
+    Route::post('saldo/add', [SaldoController::class, 'add']);
     Route::apiResource('aset', AsetController::class);
     Route::apiResource('distributor', DistributorController::class);
     Route::apiResource('detailTransaksi', DetailTransaksiController::class);

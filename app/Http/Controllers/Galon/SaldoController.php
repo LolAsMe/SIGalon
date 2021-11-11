@@ -73,4 +73,25 @@ class SaldoController extends Controller
         $saldo->delete();
         return response()->json('berhasil');
     }
+
+    /**
+     * Add Saldo With Log.
+     *
+     * @param  \App\Models\Galon\Saldo  $saldo
+     * @return \Illuminate\Http\Response
+     */
+    public function add(Request $request)
+    {
+        //
+        $saldo = Saldo::find(1);
+        $attribute = $request->all();
+        if($attribute['total'] > 0){
+            $attribute['debit'] = $attribute['total'];
+        }else{
+            $attribute['kredit'] = $attribute['total'];
+        }
+        $saldo->increment('total',$request->total);
+        $saldo->setLogAttribute($attribute)->createLog();
+        return response()->json('berhasil');
+    }
 }

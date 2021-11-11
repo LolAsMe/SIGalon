@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       form: new Form({
-        id: "",
         nama: "",
         total: ""
       }),
