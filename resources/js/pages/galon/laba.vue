@@ -69,6 +69,9 @@ export default {
       if (this.labas[0].log) {
         return this.labas[0].log.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
+            total = this.toCurrency(total)
             return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
           }
         );

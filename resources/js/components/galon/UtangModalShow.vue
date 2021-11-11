@@ -30,6 +30,9 @@ export default {
         this.utang.log.reverse();
         return this.utang.log.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
+            total = this.toCurrency(total)
             return {
               id,
               nama,

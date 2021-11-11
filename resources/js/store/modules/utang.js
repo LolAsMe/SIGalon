@@ -63,7 +63,7 @@ export const state = {
       "payer_type": "Distributor",
       "payer_id": 1,
       "aset_id": 2,
-      "jumlah": 0,
+      "": 0,
       "harga": "35000.00",
       "total": "0.00",
       "bayar": "0.00",

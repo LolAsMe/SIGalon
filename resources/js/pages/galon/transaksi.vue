@@ -109,6 +109,8 @@ export default {
         return this.transaksis.map(
           ({ id, tanggal, debit, kredit, keterangan, status, payer }) => {
             let payerNama = payer.nama
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
             return { id, payerNama, tanggal, debit, kredit, keterangan, status };
           }
         );

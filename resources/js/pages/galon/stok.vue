@@ -589,7 +589,7 @@ export default {
       try {
         let data = [];
         data = {
-          payer_type: "suplier",
+          payer_type: "Suplier",
           payer_id: this.payer_id,
           transaksis: [
             ...this.transaksiItem,

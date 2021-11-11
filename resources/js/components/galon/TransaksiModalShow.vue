@@ -29,7 +29,10 @@ export default {
       if (this.transaksi.detail) {
         return this.transaksi.detail.map(
           ({ id, jumlah, debit, kredit, total, keterangan,log }) => {
-            let tipe = log.owner_type
+            let tipe = log ? log.owner_type : "-"
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
+            total = this.toCurrency(total)
             return {
               id,
               tipe,

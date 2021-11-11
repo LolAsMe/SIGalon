@@ -27,7 +27,7 @@
     <div class="col-12 mt-2">
       <card :title="'Daftar Saldo'">
         {{ saldos[0].nama }}
-        {{ saldos[0].total }}
+        {{ toCurrency(saldos[0].total) }}
         <v-table
           :items="items"
           :itemsTitle="itemsTitle"
@@ -69,6 +69,9 @@ export default {
       if (this.saldos[0].log) {
         return this.saldos[0].log.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
+            debit = this.toCurrency(debit)
+            kredit = this.toCurrency(kredit)
+            total = this.toCurrency(total)
             return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
           }
         );
