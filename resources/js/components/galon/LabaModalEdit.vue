@@ -1,6 +1,6 @@
 <template>
   <basic-modal v-if="showModal" @close="showModal = false">
-    <h5 slot="header">Edit Laba</h5>
+    <h5 slot="header">Ambil Laba</h5>
     <div slot="body">
       <form
         id="editForm"
@@ -53,8 +53,8 @@ export default {
   data() {
     return {
       form: new Form({
-        id: "",
-        nama: "",
+        id: "99",
+        nama: "Diambil Admin",
         total:''
       }),
       showModal: false,
@@ -62,16 +62,11 @@ export default {
   },
   methods: {
     async editLaba() {
-      const { data } = await this.form.patch("api/saldo/" + this.form.id);
-      this.$store.commit("saldo/editLaba", data);
+      const { data } = await this.form.put("api/laba/" + this.form.id);
+      this.$store.dispatch("laba/fetchLabas", data);
       this.form.reset();
       this.showModal=false;
-    },
-    setLaba(saldo) {
-      this.form.id = saldo.id;
-      this.form.nama = saldo.nama;
-      this.form.total = saldo.total;
-    },
+    }
   },
 };
 </script>

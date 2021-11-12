@@ -1,38 +1,33 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <div class="d-flex bd-highlight">
-        <div class="p-2 flex-grow-1 bd-highlight"><h2>Laba</h2></div>
-        <div class="p-2 bd-highlight">
-          <button
-            class="btn btn-primary"
-            v-if="isRole('Admin')"
-            @click="$refs.addModal.showModal = true"
-          >
-            Add
-          </button>
-          <button
-            class="btn btn-primary"
-            v-if="isRole('Admin')"
-            @click="$refs.uploadModal.showModal = true"
-          >
-            Import
-          </button>
-          <laba-modal-add ref="addModal"></laba-modal-add>
-          <upload-modal :url="'laba'" ref="uploadModal"></upload-modal>
-        </div>
-      </div>
-    </div>
+    <div class="col-12"></div>
 
     <div class="col-12 mt-2">
       <card :title="'Daftar Laba'">
+        <div class="d-flex bd-highlight">
+          <div class="flex-grow-1 bd-highlight"><h4>Laba</h4></div>
+          <div class="bd-highlight">
+            <button
+              class="btn btn-primary"
+              v-if="isRole('Admin')"
+              @click="$refs.editModal.showModal = true"
+            >
+              Take
+            </button>
+            <button
+              class="btn btn-primary"
+              v-if="isRole('Admin')"
+              @click="$refs.uploadModal.showModal = true"
+            >
+              Import
+            </button>
+            <laba-modal-edit ref="editModal"></laba-modal-edit>
+            <upload-modal :url="'laba'" ref="uploadModal"></upload-modal>
+          </div>
+        </div>
         {{ labas[0].nama }}
         {{ labas[0].total }}
-        <v-table
-          :items="items"
-          :itemsTitle="itemsTitle"
-        >
-        </v-table>
+        <v-table :items="items" :itemsTitle="itemsTitle"> </v-table>
         <laba-modal-show ref="labaModal"></laba-modal-show>
         <laba-modal-edit ref="editModal"></laba-modal-edit>
       </card>
@@ -68,17 +63,35 @@ export default {
     items: function () {
       if (this.labas[0].log) {
         return this.labas[0].log.map(
-          ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
-            debit = this.toCurrency(debit)
-            kredit = this.toCurrency(kredit)
-            total = this.toCurrency(total)
-            return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
+          ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
+            debit = this.toCurrency(debit);
+            kredit = this.toCurrency(kredit);
+            total = this.toCurrency(total);
+            return {
+              id,
+              nama,
+              tanggal,
+              jumlah,
+              debit,
+              kredit,
+              total,
+              keterangan,
+            };
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Tanggal", "Jumlah", "Debit","Kredit","Total", "Keterangan"];
+      return [
+        "ID",
+        "Nama",
+        "Tanggal",
+        "Jumlah",
+        "Debit",
+        "Kredit",
+        "Total",
+        "Keterangan",
+      ];
     },
   },
   data() {

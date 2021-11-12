@@ -16,8 +16,8 @@ class AsetController extends Controller
     public function index()
     {
         //
-        $asets = Aset::with(['log'=> function($query){
-            $query->latest()->take(15);
+        $asets = Aset::with(['log' => function ($query) {
+            $query->latest()->take(7);
         }])->get();
         return response()->json($asets);
     }
@@ -58,12 +58,36 @@ class AsetController extends Controller
     {
         //
         try {
-            $newAset = $aset->update($request->all());
-            return response()->json($aset);
+            $attribute = $request->all();
+            if(isset($attribute['harga_jual'])){
 
+                $attribute['harga_jual'] = $this->getAmount($attribute['harga_jual']);
+            }
+            if(isset($attribute['harga_beli'])){
+
+                $attribute['harga_beli'] = $this->getAmount($attribute['harga_beli']);
+            }
+            $aset->update($attribute);
+            $attribute['nama'] = 'Update';
+            $aset->refresh();
+            $aset->setLogAttribute($attribute)->createLog();
+            return response()->json($aset);
         } catch (\Throwable $th) {
             return $th;
         }
+    }
+
+    public function getAmount($money)
+    {
+        $cleanString = preg_replace('/([^0-9\.,])/i', '', $money);
+        $onlyNumbersString = preg_replace('/([^0-9])/i', '', $money);
+
+        $separatorsCountToBeErased = strlen($cleanString) - strlen($onlyNumbersString) - 1;
+
+        $stringWithCommaOrDot = preg_replace('/([,\.])/', '', $cleanString, $separatorsCountToBeErased);
+        $removedThousandSeparator = preg_replace('/(\.|,)(?=[0-9]{3,}$)/', '',  $stringWithCommaOrDot);
+
+        return (float) str_replace(',', '.', $removedThousandSeparator);
     }
 
     /**

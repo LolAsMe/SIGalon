@@ -1,6 +1,6 @@
 <template>
   <basic-modal v-if="showModal" @close="showModal = false">
-    <h5 slot="header">Tambah Laba</h5>
+    <h5 slot="header">Ambil Laba</h5>
     <div slot="body">
       <form
         id="addForm"
@@ -64,7 +64,7 @@ export default {
   methods: {
     async addLaba() {
       const { data } = await this.form.post("api/saldo");
-      this.$store.commit("saldo/addLaba", data);
+      this.$store.commit("laba/addLaba", data);
       this.form.reset();
       this.showModal = false;
     },

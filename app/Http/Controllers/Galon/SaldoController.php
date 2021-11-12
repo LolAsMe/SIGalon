@@ -91,6 +91,7 @@ class SaldoController extends Controller
             $attribute['kredit'] = -$attribute['total'];
         }
         $saldo->increment('total',$request->total);
+        $saldo->refresh();
         $saldo->setLogAttribute($attribute)->createLog();
         return response()->json('berhasil');
     }

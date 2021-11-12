@@ -16,7 +16,7 @@ class LabaController extends Controller
     public function index()
     {
         //
-        $labas = Laba::with(['log'=>function($query){
+        $labas = Laba::with(['log' => function ($query) {
             $query->latest('id')->take(7);
         }])->get();
         return response()->json($labas);
@@ -54,10 +54,20 @@ class LabaController extends Controller
      * @param  \App\Models\Galon\Laba  $laba
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Laba $laba)
+    public function update(Request $request)
     {
         //
-        $newLaba = $laba->update($request->all());
+        $laba = Laba::find(1);
+        $attribute = $request->all();
+        if (isset($attribute['total'])) {
+            $laba->increment('total', -$attribute['total']);
+            if ($attribute['total'] > 0) {
+                $attribute['kredit'] = $attribute['total'];
+            } else {
+                $attribute['debit'] = -$attribute['total'];
+            }
+            $laba->setLogAttribute($attribute)->createLog();
+        }
         return response()->json($laba);
     }
 

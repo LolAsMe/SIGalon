@@ -1,38 +1,33 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <div class="d-flex bd-highlight">
-        <div class="p-2 flex-grow-1 bd-highlight"><h2>Saldo</h2></div>
-        <div class="p-2 bd-highlight">
-          <button
-            class="btn btn-primary"
-            v-if="isRole('Admin')"
-            @click="$refs.addModal.showModal = true"
-          >
-            Add
-          </button>
-          <button
-            class="btn btn-primary"
-            v-if="isRole('Admin')"
-            @click="$refs.uploadModal.showModal = true"
-          >
-            Import
-          </button>
-          <saldo-modal-add ref="addModal"></saldo-modal-add>
-          <upload-modal :url="'saldo'" ref="uploadModal"></upload-modal>
-        </div>
-      </div>
-    </div>
+    <div class="col-12"></div>
 
     <div class="col-12 mt-2">
       <card :title="'Daftar Saldo'">
+        <div class="d-flex bd-highlight">
+          <div class="flex-grow-1 bd-highlight"><h5>Saldo</h5></div>
+          <div class="bd-highlight">
+            <button
+              class="btn btn-primary"
+              v-if="isRole('Admin')"
+              @click="$refs.addModal.showModal = true"
+            >
+              Add
+            </button>
+            <button
+              class="btn btn-primary"
+              v-if="isRole('Admin')"
+              @click="$refs.uploadModal.showModal = true"
+            >
+              Import
+            </button>
+            <saldo-modal-add ref="addModal"></saldo-modal-add>
+            <upload-modal :url="'saldo'" ref="uploadModal"></upload-modal>
+          </div>
+        </div>
         {{ saldos[0].nama }}
         {{ toCurrency(saldos[0].total) }}
-        <v-table
-          :items="items"
-          :itemsTitle="itemsTitle"
-        >
-        </v-table>
+        <v-table :items="items" :itemsTitle="itemsTitle"> </v-table>
         <saldo-modal-show ref="saldoModal"></saldo-modal-show>
         <saldo-modal-edit ref="editModal"></saldo-modal-edit>
       </card>
@@ -68,17 +63,35 @@ export default {
     items: function () {
       if (this.saldos[0].log) {
         return this.saldos[0].log.map(
-          ({ id, nama, tanggal, jumlah, debit, kredit, total,keterangan }) => {
-            debit = this.toCurrency(debit)
-            kredit = this.toCurrency(kredit)
-            total = this.toCurrency(total)
-            return { id, nama, tanggal, jumlah, debit, kredit, total,keterangan };
+          ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
+            debit = this.toCurrency(debit);
+            kredit = this.toCurrency(kredit);
+            total = this.toCurrency(total);
+            return {
+              id,
+              nama,
+              tanggal,
+              jumlah,
+              debit,
+              kredit,
+              total,
+              keterangan,
+            };
           }
         );
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Tanggal", "Jumlah", "Debit","Kredit","Total", "Keterangan"];
+      return [
+        "ID",
+        "Nama",
+        "Tanggal",
+        "Jumlah",
+        "Debit",
+        "Kredit",
+        "Total",
+        "Keterangan",
+      ];
     },
   },
   data() {
