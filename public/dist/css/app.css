@@ -18814,12 +18814,12 @@ svg:not(:root).svg-inline--fa {
 .profile-photo[data-v-6dde423b] {
   width: 2rem;
   height: 2rem;
-  margin: -.375rem 0;
+  margin: -0.375rem 0;
 }
 .container[data-v-6dde423b] {
   max-width: 9999px;
 }
-.app-name[data-v-6dde423b]{
+.app-name[data-v-6dde423b] {
   font-weight: bold;
 }
 

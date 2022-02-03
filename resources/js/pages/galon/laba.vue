@@ -61,8 +61,9 @@ export default {
       labas: "laba/labas",
     }),
     items: function () {
-      if (this.labas[0].log) {
-        return this.labas[0].log.map(
+      let laba = this.labas[0].log.reverse();
+      if (laba) {
+        return laba.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
             debit = this.toCurrency(debit);
             kredit = this.toCurrency(kredit);

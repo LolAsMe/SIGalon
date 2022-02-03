@@ -62,7 +62,8 @@ export default {
     }),
     items: function () {
       if (this.saldos[0].log) {
-        return this.saldos[0].log.map(
+        let saldos = this.saldos[0].log.reverse()
+        return saldos.map(
           ({ id, nama, tanggal, jumlah, debit, kredit, total, keterangan }) => {
             debit = this.toCurrency(debit);
             kredit = this.toCurrency(kredit);

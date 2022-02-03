@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Galon;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galon\Laba;
+use App\Models\Galon\Saldo;
 use Illuminate\Http\Request;
 
 class LabaController extends Controller
@@ -58,14 +59,17 @@ class LabaController extends Controller
     {
         //
         $laba = Laba::find(1);
+        $saldo = Saldo::find(1);
         $attribute = $request->all();
         if (isset($attribute['total'])) {
+            $saldo->increment('total', -$attribute['total']);
             $laba->increment('total', -$attribute['total']);
             if ($attribute['total'] > 0) {
                 $attribute['kredit'] = $attribute['total'];
             } else {
                 $attribute['debit'] = -$attribute['total'];
             }
+            $saldo->setLogAttribute($attribute)->createLog();
             $laba->setLogAttribute($attribute)->createLog();
         }
         return response()->json($laba);

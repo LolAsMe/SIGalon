@@ -106,7 +106,8 @@ export default {
     }),
     items: function () {
       if (!this.loading && this.transaksis) {
-        return this.transaksis.map(
+        let transaksis = this.transaksis.reverse()
+        return transaksis.map(
           ({ id, tanggal, debit, kredit, keterangan, status, payer }) => {
             let payerNama = payer.nama
             debit = this.toCurrency(debit)

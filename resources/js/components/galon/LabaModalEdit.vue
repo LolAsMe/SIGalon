@@ -35,7 +35,7 @@
         type="submit"
         class="btn btn-primary btn-sm"
         form="editForm"
-        value="Edit"
+        value="Take"
       /> </template
   ></basic-modal>
 </template>
